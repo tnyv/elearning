@@ -1,8 +1,8 @@
 using LMS.Models;
 
-namespace LMS.DTOs
+namespace LMS.DTOs.User
 {
-    public class UserDTO
+    public class GetUserDTO
     {
         public int Id { get; set; }
         public string Type { get; set; }
