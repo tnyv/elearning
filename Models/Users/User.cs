@@ -1,8 +1,7 @@
-using LMS.Models;
-
-namespace LMS.DTOs.User
+namespace LMS.Models.Users
 {
-    public class UpdateUserDTO
+    // Parent class for Admin, Instructor, and Student
+    public class User
     {
         public int Id { get; set; }
         public string Type { get; set; }
