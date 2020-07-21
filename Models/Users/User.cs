@@ -3,7 +3,6 @@ using LMS.Models.Courses;
 
 namespace LMS.Models.Users
 {
-    // Parent class for Admin, Instructor, and Student
     public class User
     {
         public int Id { get; set; }
