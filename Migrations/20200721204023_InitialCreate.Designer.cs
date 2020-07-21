@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200720202118_InitialCreate")]
+    [Migration("20200721204023_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,18 +28,18 @@ namespace LMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("InstructorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subject")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("InstructorId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Course");
                 });
@@ -64,39 +64,12 @@ namespace LMS.Migrations
                     b.ToTable("Module");
                 });
 
-            modelBuilder.Entity("LMS.Models.Organization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Organizations");
-                });
-
             modelBuilder.Entity("LMS.Models.Users.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -107,8 +80,8 @@ namespace LMS.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrganizationId")
-                        .HasColumnType("int");
+                    b.Property<string>("Organization")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
@@ -116,32 +89,19 @@ namespace LMS.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Verified")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("LMS.Models.Courses.Course", b =>
                 {
-                    b.HasOne("LMS.Models.Users.User", "Instructor")
-                        .WithMany()
-                        .HasForeignKey("InstructorId");
+                    b.HasOne("LMS.Models.Users.User", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("LMS.Models.Courses.Module", b =>
@@ -149,17 +109,6 @@ namespace LMS.Migrations
                     b.HasOne("LMS.Models.Courses.Course", "course")
                         .WithMany("Modules")
                         .HasForeignKey("courseId");
-                });
-
-            modelBuilder.Entity("LMS.Models.Users.User", b =>
-                {
-                    b.HasOne("LMS.Models.Courses.Course", null)
-                        .WithMany("Students")
-                        .HasForeignKey("CourseId");
-
-                    b.HasOne("LMS.Models.Organization", "Organization")
-                        .WithMany("Users")
-                        .HasForeignKey("OrganizationId");
                 });
 #pragma warning restore 612, 618
         }

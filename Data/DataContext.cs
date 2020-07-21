@@ -8,8 +8,6 @@ namespace LMS.Data
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
-        
-        public DbSet<Organization> Organizations { get; set;}
         public DbSet<User> Users { get; set;}
         public DbSet<Course> Course { get; set;}
     }

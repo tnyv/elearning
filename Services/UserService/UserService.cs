@@ -75,14 +75,14 @@ namespace LMS.Services.UserService
             {
                 // Grab the specific User from the database asynchronously.
                 User user = await _context.Users.FirstOrDefaultAsync(f => f.Id == updatedUser.Id);
-                user.Username = updatedUser.Username;
+                user.Email = updatedUser.Email;
                 user.PasswordHash = updatedUser.PasswordHash;
                 user.PasswordSalt = updatedUser.PasswordSalt;
-                user.Email = updatedUser.Email;
-                user.Verified = updatedUser.Verified;
                 user.FirstName = updatedUser.FirstName;
                 user.LastName = updatedUser.LastName;
-                user.Phone = updatedUser.Phone;
+                user.Organization = updatedUser.Organization;
+                user.Type = updatedUser.Type;
+                user.Courses = updatedUser.Courses;
 
                 // Update the particular User in the database
                 _context.Users.Update(user);
