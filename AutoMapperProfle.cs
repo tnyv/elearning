@@ -9,7 +9,6 @@ namespace LMS
         public AutoMapperProfile()
         {
             CreateMap<User, GetUserDTO>();
-            CreateMap<AddUserDTO, User>();
         }
     }
 }

@@ -17,14 +17,15 @@ export class Counter extends Component {
   }
 
   async postDb() {
-    fetch('user', {
+    fetch('auth/register', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: "Another@email.com",
+        email: "Another2@email.com",
+        password: "123445",
         firstName: "Bobby",
         lastName: "Dentures",
         organization: "Hemo",

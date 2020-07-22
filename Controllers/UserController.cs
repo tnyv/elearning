@@ -30,11 +30,6 @@ namespace LMS.Controllers
             return Ok(await _userService.GetUserById(id));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddUser(AddUserDTO newUser) {
-            return Ok(await _userService.AddUser(newUser));
-        }
-
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updatedUser) {
             ServiceResponse<GetUserDTO> response = await _userService.UpdateUser(updatedUser);

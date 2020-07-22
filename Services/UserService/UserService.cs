@@ -22,18 +22,6 @@ namespace LMS.Services.UserService
             _mapper = mapper;
         }
 
-        public async Task<ServiceResponse<List<GetUserDTO>>> AddUser(AddUserDTO newUser)
-        {
-            ServiceResponse<List<GetUserDTO>> serviceResponse = new ServiceResponse<List<GetUserDTO>>();
-            User user = _mapper.Map<User>(newUser);
-  
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync(); 
-
-            serviceResponse.Data = (_context.Users.Select(f => _mapper.Map<GetUserDTO>(f))).ToList();
-            return serviceResponse;
-        }
-
         public async Task<ServiceResponse<List<GetUserDTO>>> DeleteUser(int id)
         {
             ServiceResponse<List<GetUserDTO>> serviceResponse = new ServiceResponse<List<GetUserDTO>>();
@@ -76,8 +64,6 @@ namespace LMS.Services.UserService
                 // Grab the specific User from the database asynchronously.
                 User user = await _context.Users.FirstOrDefaultAsync(f => f.Id == updatedUser.Id);
                 user.Email = updatedUser.Email;
-                user.PasswordHash = updatedUser.PasswordHash;
-                user.PasswordSalt = updatedUser.PasswordSalt;
                 user.FirstName = updatedUser.FirstName;
                 user.LastName = updatedUser.LastName;
                 user.Organization = updatedUser.Organization;
