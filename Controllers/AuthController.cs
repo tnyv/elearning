@@ -29,5 +29,18 @@ namespace LMS.Controllers
             }
             return Ok(response);
         }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(LoginUserDTO request)
+        {
+            ServiceResponse<string> response = await _authRepo.Login(
+                request.Email, request.Password
+            );
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
     }
 }
