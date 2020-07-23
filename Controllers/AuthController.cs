@@ -31,7 +31,7 @@ namespace LMS.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginUserDTO request)
+        public async Task<IActionResult> Login(GetUserDTO request)
         {
             ServiceResponse<string> response = await _authRepo.Login(
                 request.Email, request.Password
