@@ -3,11 +3,10 @@ using LMS.Models;
 using LMS.Models.Courses;
 using LMS.Models.Users;
 
-namespace LMS.DTOs.User
+namespace LMS.DTOs.UserDTOs
 {
-    public class UpdateUserDTO
+    public class RegisterUserDTO
     {
-        public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string FirstName { get; set; }

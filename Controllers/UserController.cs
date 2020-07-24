@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LMS.DTOs.User;
+using LMS.DTOs.UserDTOs;
 using LMS.Models;
 using LMS.Services.UserService;
 using Microsoft.AspNetCore.Mvc;

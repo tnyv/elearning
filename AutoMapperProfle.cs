@@ -1,5 +1,5 @@
 using AutoMapper;
-using LMS.DTOs.User;
+using LMS.DTOs.UserDTOs;
 using LMS.Models.Users;
 
 namespace LMS

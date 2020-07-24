@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LMS.DTOs.User;
+using LMS.DTOs.UserDTOs;
 using LMS.Models;
 
 namespace LMS.Services.UserService

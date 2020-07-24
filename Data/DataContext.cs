@@ -9,6 +9,6 @@ namespace LMS.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<User> Users { get; set;}
-        public DbSet<Course> Course { get; set;}
+        public DbSet<Course> Courses { get; set;}
     }
 }

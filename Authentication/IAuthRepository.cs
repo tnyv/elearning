@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using LMS.Models;
 using LMS.Models.Users;
 
-namespace LMS.Data
+namespace LMS.Authentication
 {
     public interface IAuthRepository
     {

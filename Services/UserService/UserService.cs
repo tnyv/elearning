@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using LMS.Data;
-using LMS.DTOs.User;
+using LMS.DTOs.UserDTOs;
 using LMS.Models;
 using LMS.Models.Users;
 using Microsoft.EntityFrameworkCore;

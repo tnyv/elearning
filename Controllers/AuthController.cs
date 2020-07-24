@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using LMS.Data;
-using LMS.DTOs.User;
+using LMS.Authentication;
+using LMS.DTOs.UserDTOs;
 using LMS.Models;
 using LMS.Models.Users;
 using Microsoft.AspNetCore.Mvc;
