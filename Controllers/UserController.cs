@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using LMS.DTOs.UserDTOs;
 using LMS.Models;
 using LMS.Services.UserService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
@@ -18,6 +20,7 @@ namespace LMS.Controllers
             _userService = userService;
         }
 
+        [AllowAnonymous] // Will not require authentication
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {

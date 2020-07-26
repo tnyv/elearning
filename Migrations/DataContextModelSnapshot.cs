@@ -26,6 +26,9 @@ namespace LMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -94,7 +97,7 @@ namespace LMS.Migrations
 
             modelBuilder.Entity("LMS.Models.Courses.Course", b =>
                 {
-                    b.HasOne("LMS.Models.Users.User", null)
+                    b.HasOne("LMS.Models.Users.User", "User")
                         .WithMany("Courses")
                         .HasForeignKey("UserId");
                 });

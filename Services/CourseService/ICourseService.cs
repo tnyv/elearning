@@ -7,7 +7,7 @@ namespace LMS.Services.CourseService
 {
     public interface ICourseService
     {
-        Task<ServiceResponse<List<GetCourseDTO>>> GetAllCourses();
+        Task<ServiceResponse<List<GetCourseDTO>>> GetAllCourses(int userId);
 
         Task<ServiceResponse<GetCourseDTO>> GetCourseById(int id);
 

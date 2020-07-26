@@ -52,10 +52,10 @@ namespace LMS.Services.CourseService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetCourseDTO>>> GetAllCourses()
+        public async Task<ServiceResponse<List<GetCourseDTO>>> GetAllCourses(int userId)
         {
             ServiceResponse<List<GetCourseDTO>> serviceResponse = new ServiceResponse<List<GetCourseDTO>>();
-            List<Course> dbCourses = await _context.Courses.ToListAsync();
+            List<Course> dbCourses = await _context.Courses.Where(c => c.User.Id == userId).ToListAsync();
             serviceResponse.Data = (dbCourses.Select(f => _mapper.Map<GetCourseDTO>(f))).ToList();
             return serviceResponse;
         }

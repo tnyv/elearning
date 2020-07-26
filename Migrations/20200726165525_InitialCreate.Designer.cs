@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200724174607_Courses")]
-    partial class Courses
+    [Migration("20200726165525_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,9 @@ namespace LMS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -96,7 +99,7 @@ namespace LMS.Migrations
 
             modelBuilder.Entity("LMS.Models.Courses.Course", b =>
                 {
-                    b.HasOne("LMS.Models.Users.User", null)
+                    b.HasOne("LMS.Models.Users.User", "User")
                         .WithMany("Courses")
                         .HasForeignKey("UserId");
                 });
