@@ -24,12 +24,14 @@ export class Counter extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: "Another2@email.com",
-        password: "123445",
-        firstName: "Bobby",
-        lastName: "Dentures",
-        organization: "Hemo",
-        type: 2
+        email: "Ashe@email.com",
+        password: "ketchup",
+        // email: "test@email.com",
+        // password: "password",
+        firstName: "Ashe",
+        lastName: "Ketchup",
+        organization: "Pokipoki",
+        type: 1
       })
     })
     .then(res => res.json())
