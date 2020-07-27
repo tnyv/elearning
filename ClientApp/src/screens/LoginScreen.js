@@ -24,7 +24,7 @@ export class LoginScreen extends React.Component {
         >
           <FormText>
             <p style={styles.header}>
-              Use the information given to you by your organization to sign in
+              Use the information given by your organization to sign in
               to your account
             </p>
           </FormText>
@@ -51,7 +51,7 @@ export class LoginScreen extends React.Component {
             <Button
               type="submit"
               style={styles.signInBtn}
-              className="col-md-12"
+              className="col-md-12 btn-primary"
             >
               Sign in
             </Button>
