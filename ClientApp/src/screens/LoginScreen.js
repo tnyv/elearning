@@ -61,7 +61,7 @@ export class LoginScreen extends React.Component {
         <Form style={styles.formWrapper} className="col-md-4">
           <FormText>
             <p style={styles.header}>
-              Use the information given to you by your organization to sign in
+              Use the information given by your organization to sign in
               to your account
             </p>
           </FormText>
@@ -93,8 +93,7 @@ export class LoginScreen extends React.Component {
           <FormGroup>
             <Button
               style={styles.signInBtn}
-              className="col-md-12"
-              onClick={() => this.login()}
+              className="col-md-12 btn-primary"
             >
               Sign in
             </Button>
