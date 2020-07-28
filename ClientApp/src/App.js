@@ -4,7 +4,7 @@ import { Layout } from "./components/Layout";
 import { Home } from "./components/Home";
 import { FetchData } from "./components/FetchData";
 import { Counter } from "./components/Counter";
-import { LoginScreen } from "./screens/LoginScreen";
+import LoginScreen from "./screens/LoginScreen";
 
 import "./custom.css";
 

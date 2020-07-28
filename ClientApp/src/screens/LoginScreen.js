@@ -1,25 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 
-export class LoginScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: null,
-      password: null,
-      login: false,
-      store: null,
-      token: null,
-    };
-  }
+const LoginScreen = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [pwFailed, setPwFailed] = useState(false);
+  const [token, setToken] = useState("");
+  const [isLogged, setIsLogged] = useState(false);
 
-  // handleSubmit(e) {
-  //   e.preventDefault();
-  //   console.log(e.target.elements.email.value);
-  //   console.log(e.target.elements.password.value);
-  // }
-
-  login() {
+  const loginPost = () => {
     fetch("auth/login", {
       method: "POST",
       headers: {
@@ -27,93 +16,104 @@ export class LoginScreen extends React.Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
+        email: email,
+        password: password,
       }),
     }).then((response) => {
       response.json().then((result) => {
         console.warn("token:", result);
-        this.setState({ token: result.data });
 
-        console.log(this.state.token);
+        if (result.success !== false) {
+          setToken(result.data);
+          setIsLogged(true);
+          setPwFailed(false);
+        } else {
+          setPwFailed(true);
+        }
       });
     });
-  }
+  };
 
-  getUsers() {
-    fetch("user/getall", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + this.state.token
-      },
-    }).then((response) => {
-      response.json().then((result) => {
-        console.log(result);
+  const getUsers = () => {
+    console.log(isLogged);
+
+    if (isLogged) {
+      fetch("user/getall", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }).then((response) => {
+        response.json().then((result) => {
+          console.log(result);
+        });
       });
-    });
-  }
+    }
+  };
 
-  render() {
-    return (
-      <div className="d-flex justify-content-center">
-        <Form style={styles.formWrapper} className="col-md-4">
-          <FormText>
-            <p style={styles.header}>
-              Use the information given by your organization to sign in
-              to your account
-            </p>
+  return (
+    <div className="d-flex justify-content-center">
+      <Form style={styles.formWrapper} className="col-md-4">
+        <FormText>
+          <p style={styles.header}>
+            Use the information given by your organization to sign in to your
+            account
+          </p>
+        </FormText>
+        <FormGroup>
+          <Input
+            type="email"
+            name="email"
+            placeholder="Email address (required)"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password (required)"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <FormText className="d-flex justify-content-end">
+            <a style={styles.forgotPw} href="/">
+              Forgot password?
+            </a>
           </FormText>
-          <FormGroup>
-            <Input
-              type="email"
-              name="email"
-              placeholder="Email address (required)"
-              onChange={(event) => {
-                this.setState({ email: event.target.value });
-              }}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password (required)"
-              onChange={(event) => {
-                this.setState({ password: event.target.value });
-              }}
-            />
-            <FormText className="d-flex justify-content-end">
-              <a style={styles.createAccount} href="/">
-                Forgot password?
-              </a>
-            </FormText>
-          </FormGroup>
-          <FormGroup>
-            <Button
-              style={styles.signInBtn}
-              className="col-md-12 btn-primary"
-            >
-              Sign in
-            </Button>
+        </FormGroup>
+        <FormGroup>
+          <Button
+            style={styles.signInBtn}
+            className="col-md-12 btn-primary"
+            onClick={() => loginPost()}
+          >
+            Sign in
+          </Button>
+        </FormGroup>
+        {pwFailed ? (
+          <div style={styles.incorrectPw}>Incorrect email or password</div>
+        ) : (
+          <div></div>
+        )}
+      </Form>
 
-            <Button
-              style={styles.signInBtn}
-              className="col-md-12"
-              onClick={() => this.getUsers()}
-            >
-              Get Users
-            </Button>
-          </FormGroup>
-        </Form>
+      <div>
+        <Button
+          style={styles.signInBtn}
+          className="col-md-12"
+          onClick={() => getUsers()}
+        >
+          Get Users
+        </Button>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 let styles = {
-  createAccount: {
+  forgotPw: {
     color: "black",
     fontSize: "14px",
   },
@@ -128,4 +128,140 @@ let styles = {
   signInBtn: {
     borderRadius: "50px",
   },
+  incorrectPw: {
+    fontSize: "14px",
+    color: "red",
+  },
 };
+
+export default LoginScreen;
+
+// import React from "react";
+// import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+
+// const loginStore = () => {
+
+// }
+
+// export class LoginScreen extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       email: null,
+//       password: null,
+//       store: null,
+//       token: null,
+//     };
+//   }
+
+//   loginPost() {
+//     fetch("auth/login", {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         email: this.state.email,
+//         password: this.state.password,
+//       }),
+//     }).then((response) => {
+//       response.json().then((result) => {
+//         console.warn("token:", result);
+//         this.setState({ token: result.data });
+
+//         console.log(this.state.token);
+//       });
+//     });
+//   }
+
+//   getUsers() {
+//     fetch("user/getall", {
+//       method: "GET",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//         "Authorization": "Bearer " + this.state.token
+//       },
+//     }).then((response) => {
+//       response.json().then((result) => {
+//         console.log(result);
+//       });
+//     });
+//   }
+
+//   render() {
+//     return (
+//       <div className="d-flex justify-content-center">
+//         <Form style={styles.formWrapper} className="col-md-4">
+//           <FormText>
+//             <p style={styles.header}>
+//               Use the information given by your organization to sign in
+//               to your account
+//             </p>
+//           </FormText>
+//           <FormGroup>
+//             <Input
+//               type="email"
+//               name="email"
+//               placeholder="Email address (required)"
+//               onChange={(event) => {
+//                 this.setState({ email: event.target.value });
+//               }}
+//             />
+//           </FormGroup>
+//           <FormGroup>
+//             <Input
+//               type="password"
+//               name="password"
+//               placeholder="Password (required)"
+//               onChange={(event) => {
+//                 this.setState({ password: event.target.value });
+//               }}
+//             />
+//             <FormText className="d-flex justify-content-end">
+//               <a style={styles.createAccount} href="/">
+//                 Forgot password?
+//               </a>
+//             </FormText>
+//           </FormGroup>
+//           <FormGroup>
+//             <Button
+//               style={styles.signInBtn}
+//               className="col-md-12 btn-primary"
+//               onClick={() => this.loginPost()}
+//             >
+//               Sign in
+//             </Button>
+
+//             <Button
+//               style={styles.signInBtn}
+//               className="col-md-12"
+//               onClick={() => this.getUsers()}
+//             >
+//               Get Users
+//             </Button>
+//           </FormGroup>
+//         </Form>
+//       </div>
+//     );
+//   }
+// }
+
+// let styles = {
+//   createAccount: {
+//     color: "black",
+//     fontSize: "14px",
+//   },
+//   formWrapper: {
+//     marginTop: "100px",
+//   },
+//   header: {
+//     color: "black",
+//     fontSize: "14px",
+//     marginBottom: "30px",
+//   },
+//   signInBtn: {
+//     borderRadius: "50px",
+//   },
+// };
