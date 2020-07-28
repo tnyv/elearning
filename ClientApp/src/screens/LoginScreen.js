@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import { Button, Form, FormGroup, Input, FormText } from "reactstrap";
+import { useSelector, useDispatch } from "react-redux";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -7,6 +8,10 @@ const LoginScreen = () => {
   const [pwFailed, setPwFailed] = useState(false);
   const [token, setToken] = useState("");
   const [isLogged, setIsLogged] = useState(false);
+
+  // Grab jwt state from store
+  const jwt = useSelector((state) => state.jwt);
+  const dispatch = useDispatch();
 
   const loginPost = () => {
     fetch("auth/login", {
@@ -23,10 +28,12 @@ const LoginScreen = () => {
       response.json().then((result) => {
         console.warn("token:", result);
 
-        if (result.success !== false) {
+        if (result.success === true) {
           setToken(result.data);
           setIsLogged(true);
           setPwFailed(false);
+
+          dispatch({ type: "ADD_JWT", payload: result.data });
         } else {
           setPwFailed(true);
         }
@@ -36,6 +43,7 @@ const LoginScreen = () => {
 
   const getUsers = () => {
     console.log(isLogged);
+    console.log("jwt: " + jwt);
 
     if (isLogged) {
       fetch("user/getall", {

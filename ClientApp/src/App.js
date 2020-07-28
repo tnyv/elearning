@@ -8,10 +8,9 @@ import LoginScreen from "./screens/LoginScreen";
 
 import "./custom.css";
 
-export default class App extends Component {
-  static displayName = App.name;
+const App = () => {
 
-  render() {
+
     return (
       <Layout>
         <Route exact path="/" component={Home} />
@@ -19,5 +18,6 @@ export default class App extends Component {
         <Route path="/login" component={LoginScreen} />
       </Layout>
     );
-  }
 }
+
+export default App;
