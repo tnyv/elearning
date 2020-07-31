@@ -1,27 +1,41 @@
 <div class="container d-flex justify-content-center">
-
-
-<form class="col-md-4">
+  <form class="col-md-5" (ngSubmit)="onSubmit($event)">
     <label class="welcome">Welcome back!</label>
-  <div class="form-group">
-    <input
-      type="email"
-      class="form-control"
-      id="exampleInputEmail1"
-      aria-describedby="emailHelp"
-      placeholder="Email"
-    />
-  </div>
-  <div class="form-group">
-    <input
-      type="password"
-      class="form-control"
-      id="exampleInputPassword1"
-      placeholder="Password"
-    />
-    <small id="pwhelp" class="form-text d-flex justify-content-end"><a routerLink="">Forgot password?</a></small>
-  </div>
-  <button type="submit" class="btn btn-primary col-md-12" id="submit-btn">Sign in</button>
-  <label id="pwhelp" class="form-text d-flex justify-content-center"><a routerLink="">Create an account</a></label>
-</form>
+    <div class="form-group">
+      <input
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        placeholder="Email"
+        [(ngModel)]="email"
+        name="email"
+      />
+    </div>
+    <div class="form-group">
+      <input
+        type="password"
+        class="form-control"
+        id="exampleInputPassword1"
+        placeholder="Password"
+        [(ngModel)]="password"
+        name="password"
+      />
+
+      <div class="row" id="invalid-forgot">
+        <ng-template [ngIf]="loginAttempted">
+          <small id="invalidpw" class="form-text">Invalid email or password</small>
+        </ng-template>
+        <small id="pwhelp" class="form-text ml-auto"
+          ><a routerLink="">Forgot password?</a></small
+        >
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary col-md-12" id="submit-btn">
+      Sign in
+    </button>
+    <label id="create" class="form-text d-flex justify-content-center"
+      ><a routerLink="">Create an account</a></label
+    >
+  </form>
 </div>
