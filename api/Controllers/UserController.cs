@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
@@ -20,7 +20,7 @@ namespace LMS.Controllers
             _userService = userService;
         }
 
-        [AllowAnonymous] // Will not require authentication
+        // [AllowAnonymous] // Will not require authentication
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {

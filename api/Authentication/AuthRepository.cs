@@ -60,7 +60,7 @@ namespace LMS.Authentication
             CreatePasswordHash(password, out byte[] passWordHash, out byte[] passwordSalt);
             user.PasswordHash = passWordHash;
             user.PasswordSalt = passwordSalt;
-
+            
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             response.Data = user.Id;

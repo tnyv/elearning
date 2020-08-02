@@ -22,23 +22,22 @@ export class LoginService {
     let headers = new HttpHeaders();
     headers.append("Content-Type", "application/json");
     headers.append("Authorization", "Bearer " + this.token);
+
+    // Promise used so that api call finished before executing another function
     return new Promise((resolve, reject) => {
-      this.http
-      .get(this.baseUrl + "/getall", { headers: headers })
-      .subscribe((res: Response) => {
-        console.log(res);
+      this.http.get(this.baseUrl + "/getall", { headers: headers }).subscribe(
+        (res: Response) => {
+          console.log(res);
 
-        // Converting returned JSON into parsable object
-        var response = JSON.parse(JSON.stringify(res));
-        console.log(response.data);
-
-        this.users = response.data;
-
-        console.log("IM DONE WITH GETTING USER");
-        resolve();
-      });
-    })
-    
-    
+          // Converting returned JSON into parsable object
+          var response = JSON.parse(JSON.stringify(res));
+          this.users = response.data;
+          resolve();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
   }
 }

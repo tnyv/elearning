@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using api.DTOs.UserDTOs;
 using LMS.Authentication;
 using LMS.DTOs.UserDTOs;
 using LMS.Models;
@@ -21,17 +22,25 @@ namespace LMS.Controllers
         public async Task<IActionResult> Register(RegisterUserDTO request)
         {
             ServiceResponse<int> response = await _authRepo.Register(
-                new User { Email = request.Email }, request.Password
+                new User
+                {
+                    Email = request.Email,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    Organization = request.Organization,
+                    Type = request.Type
+                }, request.Password
             );
             if (!response.Success)
             {
                 return BadRequest(response);
             }
+            response.Message = "New user succesfully registered.";
             return Ok(response);
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(GetUserDTO request)
+        public async Task<IActionResult> Login(LoginDTO request)
         {
             ServiceResponse<string> response = await _authRepo.Login(
                 request.Email, request.Password

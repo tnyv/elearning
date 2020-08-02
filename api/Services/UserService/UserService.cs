@@ -75,6 +75,7 @@ namespace LMS.Services.UserService
                 // Save the changes in the database
                 await _context.SaveChangesAsync();
 
+                serviceResponse.Message = "User update successful.";
                 serviceResponse.Data = _mapper.Map<GetUserDTO>(user);
             }
             catch (Exception ex)
