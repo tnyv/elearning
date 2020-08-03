@@ -67,7 +67,7 @@ namespace LMS.Services.UserService
                 user.FirstName = updatedUser.FirstName;
                 user.LastName = updatedUser.LastName;
                 user.Organization = updatedUser.Organization;
-                user.Type = updatedUser.Type;
+                user.Role = updatedUser.Role;
                 user.Courses = updatedUser.Courses;
 
                 // Update the particular User in the database

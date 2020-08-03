@@ -28,7 +28,7 @@ namespace LMS.Controllers
                     FirstName = request.FirstName,
                     LastName = request.LastName,
                     Organization = request.Organization,
-                    Type = request.Type
+                    Role = "User",
                 }, request.Password
             );
             if (!response.Success)
