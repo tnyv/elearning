@@ -4,6 +4,7 @@ using api.DTOs.UserDTOs;
 using LMS.DTOs.UserDTOs;
 using LMS.Models;
 using LMS.Models.Users;
+using LMS.Models.Users.Role;
 using LMS.Services.UserService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,19 +22,21 @@ namespace LMS.Controllers
             _userService = userService;
         }
 
-        // [AllowAnonymous] // Will not require authentication
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
             return Ok(await _userService.GetAllUsers());
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSingle(int id)
         {
             return Ok(await _userService.GetUserById(id));
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updatedUser)
         {
@@ -45,6 +48,7 @@ namespace LMS.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -1,6 +1,6 @@
-namespace LMS.Models.Users
+namespace LMS.Models.Users.Role
 {
-    public class AccountType
+    public static class Role
     {
         public const string Admin = "Admin";
         public const string Instructor = "Instructor";
