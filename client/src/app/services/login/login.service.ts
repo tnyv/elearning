@@ -1,29 +1,58 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { User } from "../../models/user";
+import { State } from "../../state";
 
 @Injectable({
   providedIn: "root",
 })
 export class LoginService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private state: State) {}
 
   // PRODUCTION LINK: private baseUrl = '';
   // DEBUG LINK: private baseUrl = "https://localhost:5001/user";
   private baseUrl = "https://localhost:5001/user";
 
+  // Use for getUsers() method below. Only Admin & Instructor roles are allowed to utilize this.
   users: User[];
 
-  token: string =
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJ0ZXN0QGVtYWlsLmNvbSIsIm5iZiI6MTU5NjIyODk3NywiZXhwIjoxNTk2MzE1Mzc3LCJpYXQiOjE1OTYyMjg5Nzd9.OfuCyzA0S1JJZXTzpYOYtifkn8j1Z7AvD7_e29svieatehc7kaFyX2mtcL58uxivQplXv2cc7OeFJPE3lz7sgw";
+  login(username: string, password: string) {
+    const headers = { "Content-Type": "application/json" };
+    const body = { email: username, password: password };
+
+    return new Promise((resolve, reject) => {
+      this.http
+        .post<any>(this.baseUrl + "/login", body, { headers })
+        .subscribe((res: Response) => {
+          console.log(res);
+
+          // Converting returned JSON into parsable object
+          var response = JSON.parse(JSON.stringify(res));
+
+          // Set global states
+          this.state.jwt = response.data;
+
+          // Storing jwt in browser's localstorage
+          localStorage.setItem("jwt", response.data);
+
+          resolve();
+        });
+    });
+  }
+
+  // One instance of jwt is stored on clientsude "state.ts" file in directory and another
+  // is stored in browser's localstorage upon successfully logging in. This isLogged() will
+  // be called each time user navigates to a page where login status needs to be verified.
+  isLogged() {
+    return localStorage.getItem("jwt") == this.state.jwt;
+  }
 
   getUsers() {
     let headers = new HttpHeaders();
     headers.append("Content-Type", "application/json");
-    headers.append("Authorization", "Bearer " + this.token);
+    headers.append("Authorization", "Bearer " + this.state.jwt);
 
-    // Promise used so that api call finished before executing another function
+    // Promise used so that api call finishes before executing another function
     return new Promise((resolve, reject) => {
       this.http.get(this.baseUrl + "/getall", { headers: headers }).subscribe(
         (res: Response) => {

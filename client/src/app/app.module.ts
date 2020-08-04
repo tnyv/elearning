@@ -9,11 +9,13 @@ import { HomeComponent } from "./screens/home/home.component";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { LoginService } from "./services/login/login.service";
+import { ProfileComponent } from './screens/profile/profile.component';
+import { State } from "./state";
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, LoginComponent, HomeComponent],
+  declarations: [AppComponent, NavbarComponent, LoginComponent, HomeComponent, ProfileComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [LoginService],
+  providers: [LoginService, State],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
