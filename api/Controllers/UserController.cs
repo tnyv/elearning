@@ -29,7 +29,7 @@ namespace LMS.Controllers
             return Ok(await _userService.GetAllUsers());
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSingle(int id)
         {

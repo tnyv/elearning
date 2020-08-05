@@ -13,6 +13,7 @@ namespace LMS.Models.Users
         public string LastName { get; set; }
         public string Organization { get; set; }
         public string Role { get; set; }
+        public int Points { get; set; }
         public List<Course> Courses { get; set; }
     }
 }

@@ -1,13 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { User } from "../../models/user";
-import { State } from "../../state";
 
 @Injectable({
   providedIn: "root",
 })
 export class LoginService {
-  constructor(private http: HttpClient, private state: State) {}
+  constructor(private http: HttpClient) {}
 
   // PRODUCTION LINK: private baseUrl = '';
   // DEBUG LINK: private baseUrl = "https://localhost:5001/user";
@@ -30,7 +29,7 @@ export class LoginService {
           var response = JSON.parse(JSON.stringify(res));
 
           // Set global states
-          this.state.jwt = response.data;
+          // this.state.jwt = response.data;
 
           // Storing jwt in browser's localstorage
           localStorage.setItem("jwt", response.data);
@@ -44,13 +43,13 @@ export class LoginService {
   // is stored in browser's localstorage upon successfully logging in. This isLogged() will
   // be called each time user navigates to a page where login status needs to be verified.
   isLogged() {
-    return localStorage.getItem("jwt") == this.state.jwt;
+    // return localStorage.getItem("jwt") == this.state.jwt;
   }
 
   getUsers() {
     let headers = new HttpHeaders();
     headers.append("Content-Type", "application/json");
-    headers.append("Authorization", "Bearer " + this.state.jwt);
+    // headers.append("Authorization", "Bearer " + this.state.jwt);
 
     // Promise used so that api call finishes before executing another function
     return new Promise((resolve, reject) => {

@@ -15,5 +15,6 @@ namespace LMS.DTOs.UserDTOs
         public string Organization { get; set; }
         public string Role { get; set; }
         public List<Course> Courses { get; set; }
+        public int Points { get; set; }
     }
 }

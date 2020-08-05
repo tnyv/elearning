@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { LoginService } from "../../services/login/login.service";
-import { State } from "../../state";
 
 @Component({
   selector: "app-login",
@@ -8,7 +7,7 @@ import { State } from "../../state";
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
-  constructor(public httpLogin: LoginService, private state: State) {}
+  constructor(public httpLogin: LoginService) {}
 
   ngOnInit() {
     console.log("isLogged: " + this.httpLogin.isLogged());

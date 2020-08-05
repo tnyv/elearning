@@ -10,12 +10,11 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { LoginService } from "./services/login/login.service";
 import { ProfileComponent } from './screens/profile/profile.component';
-import { State } from "./state";
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, LoginComponent, HomeComponent, ProfileComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [LoginService, State],
+  providers: [LoginService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
