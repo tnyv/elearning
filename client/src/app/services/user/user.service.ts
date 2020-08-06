@@ -15,9 +15,9 @@ export class UserService {
   // Use for getUsers() method below. Only Admin & Instructor roles are allowed to utilize this.
   users: User[];
 
-  login(username: string, password: string) {
+  login(email: string, password: string) {
     const headers = { "Content-Type": "application/json" };
-    const body = { email: username, password: password };
+    const body = { email: email, password: password };
 
     return new Promise((resolve, reject) => {
       this.http
@@ -39,11 +39,34 @@ export class UserService {
     });
   }
 
-  // One instance of jwt is stored on clientsude "state.ts" file in directory and another
-  // is stored in browser's localstorage upon successfully logging in. This isLogged() will
-  // be called each time user navigates to a page where login status needs to be verified.
-  isLogged() {
-    // return localStorage.getItem("jwt") == this.state.jwt;
+  register(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    organization: string
+  ) {
+    const headers = { "Content-Type": "application/json" };
+    const body = {
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      organization: organization,
+    };
+
+    return new Promise((resolve, reject) => {
+      this.http
+        .post<any>(this.baseUrl + "/register", body, { headers })
+        .subscribe(
+          (res: Response) => {
+            resolve();
+          },
+          (error) => {
+            reject();
+          }
+        );
+    });
   }
 
   getUsers() {

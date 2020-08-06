@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
   constructor(public httpUser: UserService) {}
 
   ngOnInit() {
-    console.log("isLogged: " + this.httpUser.isLogged());
+    
   }
 
   email: string = "";
@@ -39,6 +39,6 @@ export class LoginComponent implements OnInit {
 
   printStatus() {
     var jwt = localStorage.getItem('jwt');
-    console.log("isLogged: " + this.httpUser.isLogged());
+    
   }
 }

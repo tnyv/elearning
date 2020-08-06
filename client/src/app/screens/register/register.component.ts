@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { UserService } from "../../services/user/user.service";
 
 @Component({
   selector: "app-register",
@@ -6,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./register.component.scss"],
 })
 export class RegisterComponent implements OnInit {
-  constructor() {}
+  constructor(public httpUser: UserService) {}
 
   ngOnInit() {}
 
@@ -29,9 +30,30 @@ export class RegisterComponent implements OnInit {
   onSubmit($event) {
     $event.preventDefault();
 
-    if(this.isValid) {
-      
+    if (this.isValid()) {
+      this.httpUser
+        .register(
+          this.email,
+          this.password1,
+          this.firstName,
+          this.lastName,
+          this.organization
+        )
+        .then(
+          () => {
+            return this.respond();
+          },
+          (reject) => {
+            this.emailValid = false;
+            this.emailWarning = "Email address already exists.";
+          }
+        );
     }
+  }
+
+  respond() {
+    var responseMessage = localStorage.getItem("registrationResponse");
+    console.log(responseMessage);
   }
 
   isValid(): boolean {
