@@ -5,7 +5,7 @@ import { User } from "../../models/user";
 @Injectable({
   providedIn: "root",
 })
-export class LoginService {
+export class UserService {
   constructor(private http: HttpClient) {}
 
   // PRODUCTION LINK: private baseUrl = '';

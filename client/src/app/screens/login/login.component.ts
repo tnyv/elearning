@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { LoginService } from "../../services/login/login.service";
+import { UserService } from "../../services/user/user.service";
 
 @Component({
   selector: "app-login",
@@ -7,10 +7,10 @@ import { LoginService } from "../../services/login/login.service";
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
-  constructor(public httpLogin: LoginService) {}
+  constructor(public httpUser: UserService) {}
 
   ngOnInit() {
-    console.log("isLogged: " + this.httpLogin.isLogged());
+    console.log("isLogged: " + this.httpUser.isLogged());
   }
 
   email: string = "";
@@ -25,20 +25,20 @@ export class LoginComponent implements OnInit {
     //   return this.printUsers();
     // });
 
-    this.httpLogin.login(this.email, this.password).then(() => {
+    this.httpUser.login(this.email, this.password).then(() => {
       return this.printStatus();
     })
   }
 
   printUsers() {
     console.log("PRINTING");
-    for (var i = 0; i < this.httpLogin.users.length; i++) {
-      console.log(this.httpLogin.users[i].email);
+    for (var i = 0; i < this.httpUser.users.length; i++) {
+      console.log(this.httpUser.users[i].email);
     }
   }
 
   printStatus() {
     var jwt = localStorage.getItem('jwt');
-    console.log("isLogged: " + this.httpLogin.isLogged());
+    console.log("isLogged: " + this.httpUser.isLogged());
   }
 }

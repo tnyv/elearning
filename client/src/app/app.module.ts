@@ -8,14 +8,14 @@ import { LoginComponent } from "./screens/login/login.component";
 import { HomeComponent } from "./screens/home/home.component";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-import { LoginService } from "./services/login/login.service";
+import { UserService } from "./services/user/user.service";
 import { ProfileComponent } from './screens/profile/profile.component';
 import { RegisterComponent } from './screens/register/register.component';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, LoginComponent, HomeComponent, ProfileComponent, RegisterComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [LoginService],
+  providers: [UserService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
