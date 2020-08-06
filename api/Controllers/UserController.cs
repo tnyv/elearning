@@ -60,7 +60,6 @@ namespace LMS.Controllers
             return Ok(response);
         }
 
-        // Methods "Register" and "Login" below require Microsoft.AspNetCore.Authorization
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterUserDTO request)
@@ -73,6 +72,8 @@ namespace LMS.Controllers
                     LastName = request.LastName,
                     Organization = request.Organization,
                     Role = "User",
+                    Points = 0,
+                    Certificates = new List<api.Models.Certificate>()
                 }, request.Password
             );
             if (!response.Success)
