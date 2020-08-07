@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Input, FormText } from "reactstrap";
+import { Button, Form, FormGroup, Input, FormText, NavLink } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [pwFailed, setPwFailed] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
   const history = useHistory();
 
   // Grab jwt state from store
@@ -14,35 +15,45 @@ const LoginScreen = () => {
   const isLogged = useSelector((state) => state.isLogged);
   const dispatch = useDispatch();
 
-  const loginPost = () => {
-    dispatch({ type: "ADD_JWT", payload: "hello dude" });
-    dispatch({ type: "SET_LOGGED", payload: true });
+  const httpLogin = () => {
+    setLoginFailed(false);
 
-    // fetch("auth/login", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     email: email,
-    //     password: password,
-    //   }),
-    // }).then((response) => {
-    //   response.json().then((result) => {
-    //     console.warn("result:", result);
+    return new Promise((resolve, reject) => {
+      fetch("user/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      }).then((response) => {
+        response.json().then((result) => {
+          if (result.success) {
+            dispatch({ type: "ADD_JWT", payload: result.data });
+            dispatch({ type: "SET_LOGGED", payload: true });
+            resolve();
+          } else {
+            reject();
+          }
+        });
+      });
+    });
+  };
 
-    //     if (result.success === true) {
-    //       setPwFailed(false);
+  const goToCounter = () => {
+    history.push("/counter");
+  };
 
-    //       dispatch({ type: "ADD_JWT", payload: result.data });
-    //       dispatch({ type: "SET_LOGGED", payload: true });
-    //       history.push("/counter");
-    //     } else {
-    //       setPwFailed(true);
-    //     }
-    //   });
-    // });
+  const onSubmit = () => {
+    httpLogin().then(() => {
+      return goToCounter();
+    },
+    (reject) => {
+      setLoginFailed(true);
+    });
   };
 
   const getUsers = () => {
@@ -67,91 +78,63 @@ const LoginScreen = () => {
 
   const onKeyDownHandler = (e) => {
     if (e.key === "Enter") {
-      loginPost();
+      httpLogin();
     }
   };
 
   return (
     <div className="d-flex justify-content-center">
-      <Form style={styles.formWrapper} className="col-md-4">
-        <FormText>
-          <p style={styles.header}>
-            Use the information given by your organization to sign in to your
-            account
-          </p>
-        </FormText>
+      <Form style={{ marginTop: "120px" }} className="col-md-5">
+        <label
+          style={{ fontSize: "30px", marginBottom: "10px", color: "black" }}
+        >
+          {" "}
+          Welcome back!
+        </label>
         <FormGroup>
+          <label>Email</label>
           <Input
             type="email"
             name="email"
-            placeholder="Email address (required)"
             onChange={(e) => setEmail(e.target.value)}
             onKeyPress={(e) => onKeyDownHandler(e)}
           />
         </FormGroup>
         <FormGroup>
+          <label>Password</label>
           <Input
             type="password"
             name="password"
-            placeholder="Password (required)"
             onChange={(e) => setPassword(e.target.value)}
             onKeyPress={(e) => onKeyDownHandler(e)}
           />
           <FormText className="d-flex justify-content-end">
-            <a style={styles.forgotPw} href="/">
+            <NavLink
+              tag={Link}
+              to="/"
+              style={{ padding: "0", color: "black", fontSize: "14px" }}
+            >
               Forgot password?
-            </a>
+            </NavLink>
           </FormText>
         </FormGroup>
         <FormGroup>
           <Button
-            style={styles.signInBtn}
             className="col-md-12 btn-primary"
-            onClick={() => loginPost()}
+            style={{ borderRadius: "20px" }}
+            onClick={() => onSubmit()}
           >
             Sign in
           </Button>
         </FormGroup>
-        {pwFailed ? (
-          <div style={styles.incorrectPw}>Incorrect email or password</div>
+        {loginFailed ? (
+          <div style={{ color: "red" }}>Incorrect email or password</div>
         ) : (
           <div></div>
         )}
       </Form>
-
-      <div>
-        <Button
-          style={styles.signInBtn}
-          className="col-md-12"
-          onClick={() => getUsers()}
-        >
-          Get Users
-        </Button>
-      </div>
     </div>
   );
-};
-
-let styles = {
-  forgotPw: {
-    color: "black",
-    fontSize: "14px",
-  },
-  formWrapper: {
-    marginTop: "100px",
-  },
-  header: {
-    color: "black",
-    fontSize: "14px",
-    marginBottom: "30px",
-  },
-  signInBtn: {
-    borderRadius: "50px",
-  },
-  incorrectPw: {
-    fontSize: "14px",
-    color: "red",
-  },
 };
 
 export default LoginScreen;
