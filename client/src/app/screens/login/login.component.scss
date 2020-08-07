@@ -10,11 +10,11 @@ form {
   border-radius: 50px;
 }
 
-#pwhelp a{
+#pwhelp a {
   color: black;
 }
 
-#create a{
+#create a {
   color: black;
 }
 
@@ -23,6 +23,12 @@ form {
   margin-right: 0px;
 }
 
-#invalidpw {
+#warning {
+  margin-left: 0px;
+  margin-right: 0px;
   color: rgb(214, 0, 0);
+}
+
+#emailInput {
+  margin-bottom: 5px;
 }

@@ -28,13 +28,13 @@ export class UserService {
           // Converting returned JSON into parsable object
           var response = JSON.parse(JSON.stringify(res));
 
-          // Set global states
-          // this.state.jwt = response.data;
-
           // Storing jwt in browser's localstorage
           localStorage.setItem("jwt", response.data);
 
           resolve();
+        },
+        (error) => {
+          reject();
         });
     });
   }

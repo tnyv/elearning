@@ -9,36 +9,54 @@ import { UserService } from "../../services/user/user.service";
 export class LoginComponent implements OnInit {
   constructor(public httpUser: UserService) {}
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   email: string = "";
   password: string = "";
-  loginAttempted: boolean = true;
+
+  loginValid: boolean = true;
 
   private onSubmit(event: Event) {
     event.preventDefault();
 
     // Using Promise in httpLogin.getUsers() so that api call finishes before executing next method
-    // this.httpLogin.getUsers().then(() => {
-    //   return this.printUsers();
-    // });
+    // this.httpUser.login(this.email, this.password).then(
+    //   () => {
+    //     return this.respond();
+    //   },
+    //   (reject) => {
+    //     // this.emailValid = false;
+    //     // this.emailWarning = "Email address already exists.";
+    //   }
+    // );
 
-    this.httpUser.login(this.email, this.password).then(() => {
-      return this.printStatus();
-    })
+    console.log(this.isValid());
   }
 
-  printUsers() {
+  respond() {
     console.log("PRINTING");
-    for (var i = 0; i < this.httpUser.users.length; i++) {
-      console.log(this.httpUser.users[i].email);
-    }
   }
 
-  printStatus() {
-    var jwt = localStorage.getItem('jwt');
-    
+  isValid() {
+    this.loginValid = true;
+    var isValid = true;
+
+    let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+    if (!EMAIL_REGEXP.test(this.email)) {
+      this.loginValid = false;
+      isValid = false;
+    }
+
+    if (this.email == "") {
+      this.loginValid = false;
+      isValid = false;
+    }
+
+    if (this.password == "") {
+      this.loginValid = false;
+      isValid = false;
+    }
+
+    return isValid;
   }
 }
