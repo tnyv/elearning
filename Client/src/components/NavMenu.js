@@ -18,10 +18,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 const NavMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
+  const isLogged = useSelector((state) => state.isLogged);
 
   const toggleNavbar = () => {
     setCollapsed(!collapsed);
-  }
+  };
 
   return (
     <header>
@@ -40,52 +41,54 @@ const NavMenu = () => {
             navbar
           >
             <ul className="navbar-nav flex-grow">
-              <NavItem>
-                <NavLink
-                  tag={Link}
-                  className="text-dark"
-                  to="/"
-                  style={{ color: "black" }}
-                >
+              <NavItem className="navItem">
+                <NavLink tag={Link} to="/" style={{ color: "black" }}>
                   Home
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink
-                  tag={Link}
-                  className="text-dark"
-                  to="/counter"
-                  style={{ color: "black" }}
-                >
-                  Counter
+
+              <NavItem className="navItem">
+                <NavLink tag={Link} to="/counter" style={{ color: "black" }}>
+                  Courses
                 </NavLink>
               </NavItem>
 
-              <NavItem>
-                <NavLink
-                  tag={Link}
-                  className="text-dark"
-                  to="/login"
-                  style={{ color: "black" }}
-                >
-                  Login
+              <NavItem className="navItem">
+                <NavLink tag={Link} to="/counter" style={{ color: "black" }}>
+                  Resources
                 </NavLink>
               </NavItem>
 
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret style={{ color: "black" }}>
-                  Account
-                </DropdownToggle>
-                <DropdownMenu
-                  style={{ marginTop: "10px", marginRight: "50px" }}
-                >
-                  <DropdownItem>Profile</DropdownItem>
-                  <DropdownItem>Certificates</DropdownItem>
+              <NavItem className="navItem">
+                <NavLink tag={Link} to="/counter" style={{ color: "black" }}>
+                  Leaderboard
+                </NavLink>
+              </NavItem>
 
-                  <DropdownItem divider />
-                  <DropdownItem>Sign Out</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              {!isLogged ? (
+                <NavItem className="navItem">
+                  <NavLink tag={Link} to="/login" style={{ color: "black" }}>
+                    Login
+                  </NavLink>
+                </NavItem>
+              ) : (
+                <UncontrolledDropdown nav inNavbar className="navItem">
+                  <DropdownToggle nav caret style={{ color: "black" }}>
+                    Account
+                  </DropdownToggle>
+                  <DropdownMenu
+                    style={{ marginTop: "10px", marginRight: "50px" }}
+                  >
+                    <DropdownItem className="dropItem">Profile</DropdownItem>
+                    <DropdownItem className="dropItem">
+                      Certificates
+                    </DropdownItem>
+
+                    <DropdownItem divider />
+                    <DropdownItem className="dropItem">Sign Out</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              )}
             </ul>
           </Collapse>
         </Container>
