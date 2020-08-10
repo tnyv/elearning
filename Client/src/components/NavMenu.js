@@ -12,17 +12,20 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./NavMenu.css";
-import { useSelector, useDispatch } from "react-redux";
+import Cookies from 'universal-cookie';
 
 const NavMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
-  const isLogged = useSelector((state) => state.isLogged);
+  const cookies = new Cookies();
+  const history = useHistory();
+  const isLogged = cookies.get('isLogged');
 
   const toggleNavbar = () => {
     setCollapsed(!collapsed);
   };
+
 
   return (
     <header>
@@ -72,23 +75,27 @@ const NavMenu = () => {
                   </NavLink>
                 </NavItem>
               ) : (
-                <UncontrolledDropdown nav inNavbar className="navItem">
-                  <DropdownToggle nav caret style={{ color: "black" }}>
-                    Account
+                  <UncontrolledDropdown nav inNavbar className="navItem">
+                    <DropdownToggle nav caret style={{ color: "black" }}>
+                      Account
                   </DropdownToggle>
-                  <DropdownMenu
-                    style={{ marginTop: "10px", marginRight: "50px" }}
-                  >
-                    <DropdownItem className="dropItem">Profile</DropdownItem>
-                    <DropdownItem className="dropItem">
-                      Certificates
+                    <DropdownMenu
+                      style={{ marginTop: "10px", marginRight: "50px" }}
+                    >
+                      <DropdownItem className="dropItem">Profile</DropdownItem>
+                      <DropdownItem className="dropItem">
+                        Certificates
                     </DropdownItem>
 
-                    <DropdownItem divider />
-                    <DropdownItem className="dropItem">Sign Out</DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              )}
+                      <DropdownItem divider />
+                      <DropdownItem className="dropItem" onClick={() => {
+                        cookies.set('isLogged', false, { path: '/', expires: new Date(Date.now())});
+                        cookies.set('jwt', '', { path: '/', expires: new Date(Date.now())});
+                        history.push("/");
+                      }}>Sign Out</DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                )}
             </ul>
           </Collapse>
         </Container>
