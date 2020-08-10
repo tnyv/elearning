@@ -1,18 +1,14 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Cookies from 'universal-cookie';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const history = useHistory();
-
-  // Grab jwt state from store
-  const jwt = useSelector((state) => state.jwt);
-  const isLogged = useSelector((state) => state.isLogged);
-  const dispatch = useDispatch();
+  const cookies = new Cookies();
 
   const httpLogin = async () => {
     return fetch("user/login", {
@@ -32,37 +28,40 @@ const LoginScreen = () => {
     const response = await httpLogin();
 
     const isSuccess = await response.json().then((result) => {
-      dispatch({ type: "ADD_JWT", payload: result.data });
-      dispatch({ type: "SET_LOGGED", payload: result.success });
+      // Set to expire in 24 hours
+      const expirationDate = new Date(Date.now()+ 60 * 60 * 24 * 1000);
+
+      cookies.set('isLogged', result.success, { path: '/', expires: expirationDate});
+      cookies.set('jwt', result.data, { path: '/', expires: expirationDate});
       return result.success;
     });
 
     if (isSuccess) {
+      console.log(cookies.get('isLogged'));
+      console.log(cookies.get('jwt'));
       history.push("/counter");
     } else {
       setIsError(true);
     }
   };
 
-  const getUsers = () => {
-    console.log("jwt: " + jwt);
-    console.log("isLogged: " + isLogged);
+  // const getUsers = () => {
 
-    if (isLogged) {
-      fetch("user/getall", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + jwt,
-        },
-      }).then((response) => {
-        response.json().then((result) => {
-          console.log(result);
-        });
-      });
-    }
-  };
+  //   if (isLogged) {
+  //     fetch("user/getall", {
+  //       method: "GET",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + jwt,
+  //       },
+  //     }).then((response) => {
+  //       response.json().then((result) => {
+  //         console.log(result);
+  //       });
+  //     });
+  //   }
+  // };
 
   return (
     <div className="d-flex justify-content-center">
