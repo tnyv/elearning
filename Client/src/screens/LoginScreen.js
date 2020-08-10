@@ -9,20 +9,7 @@ const LoginScreen = () => {
   const history = useHistory();
   const cookies = new Cookies();
 
-  const httpLogin = async () => {
-    return fetch("user/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-  };
-
+  // Save user data to cookies upon successsful login
   const httpGetUser = () => {
     fetch("user/" + email, {
       method: "GET",
@@ -47,21 +34,33 @@ const LoginScreen = () => {
     });
   }
 
+  const httpLogin = async () => {
+    return fetch("user/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+  };
+
   const onSubmit = async () => {
     const response = await httpLogin();
-
     const isSuccess = await response.json().then((result) => {
       // Set to expire in 24 hours
       const expirationDate = new Date(Date.now() + 60 * 60 * 24 * 1000);
 
+      // Set jwt before httpGetUser is executed
       cookies.set('isLogged', result.success, { path: '/', expires: expirationDate });
       cookies.set('jwt', result.data, { path: '/', expires: expirationDate });
       return result.success;
     });
 
     if (isSuccess) {
-      console.log(cookies.get('isLogged'));
-      console.log(cookies.get('jwt'));
       httpGetUser();
       history.push("/counter");
     } else {
