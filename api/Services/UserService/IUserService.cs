@@ -9,7 +9,7 @@ namespace LMS.Services.UserService
     public interface IUserService
     {
          Task<ServiceResponse<List<GetUserDTO>>> GetAllUsers();
-         Task<ServiceResponse<GetUserDTO>> GetUserById(int id);
+         Task<ServiceResponse<GetUserDTO>> GetUserByEmail(string email);
          Task<ServiceResponse<GetUserDTO>> UpdateUser(UpdateUserDTO updatedUser);
          Task<ServiceResponse<List<GetUserDTO>>> DeleteUser(int id);
          Task<ServiceResponse<int>> Register(User user, string password);

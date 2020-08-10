@@ -55,10 +55,10 @@ namespace LMS.Services.UserService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetUserDTO>> GetUserById(int id)
+        public async Task<ServiceResponse<GetUserDTO>> GetUserByEmail(string email)
         {
             ServiceResponse<GetUserDTO> serviceResponse = new ServiceResponse<GetUserDTO>();
-            User dbUser = await _context.Users.FirstOrDefaultAsync(f => f.Id == id);
+            User dbUser = await _context.Users.FirstOrDefaultAsync(f => f.Email == email);
             serviceResponse.Data = _mapper.Map<GetUserDTO>(dbUser);
             return serviceResponse;
         }

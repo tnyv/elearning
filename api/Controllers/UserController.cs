@@ -30,10 +30,10 @@ namespace LMS.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetSingle(int id)
+        [HttpGet("{email}")]
+        public async Task<IActionResult> GetSingle(string email)
         {
-            return Ok(await _userService.GetUserById(id));
+            return Ok(await _userService.GetUserByEmail(email));
         }
 
         [Authorize(Roles = Role.Admin)]
