@@ -23,44 +23,51 @@ const LoginScreen = () => {
     });
   };
 
+  const httpGetUser = () => {
+    fetch("user/" + email, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.get('jwt')
+      }
+    }).then((response) => {
+      response.json().then((result) => {
+        // Set to expire in 24 hours
+        const expirationDate = new Date(Date.now() + 60 * 60 * 24 * 1000);
+
+        cookies.set('email', result.data.email, { path: '/', expires: expirationDate });
+        cookies.set('firstName', result.data.firstName, { path: '/', expires: expirationDate });
+        cookies.set('lastName', result.data.lastName, { path: '/', expires: expirationDate });
+        cookies.set('organization', result.data.organization, { path: '/', expires: expirationDate });
+        cookies.set('role', result.data.role, { path: '/', expires: expirationDate });
+        cookies.set('points', result.data.points, { path: '/', expires: expirationDate });
+        cookies.set('certificates', "To be implemented", { path: '/', expires: expirationDate });
+      });
+    });
+  }
+
   const onSubmit = async () => {
     const response = await httpLogin();
 
     const isSuccess = await response.json().then((result) => {
       // Set to expire in 24 hours
-      const expirationDate = new Date(Date.now()+ 60 * 60 * 24 * 1000);
+      const expirationDate = new Date(Date.now() + 60 * 60 * 24 * 1000);
 
-      cookies.set('isLogged', result.success, { path: '/', expires: expirationDate});
-      cookies.set('jwt', result.data, { path: '/', expires: expirationDate});
+      cookies.set('isLogged', result.success, { path: '/', expires: expirationDate });
+      cookies.set('jwt', result.data, { path: '/', expires: expirationDate });
       return result.success;
     });
 
     if (isSuccess) {
       console.log(cookies.get('isLogged'));
       console.log(cookies.get('jwt'));
+      httpGetUser();
       history.push("/counter");
     } else {
       setIsError(true);
     }
   };
-
-  // const getUsers = () => {
-
-  //   if (isLogged) {
-  //     fetch("user/getall", {
-  //       method: "GET",
-  //       headers: {
-  //         Accept: "application/json",
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + jwt,
-  //       },
-  //     }).then((response) => {
-  //       response.json().then((result) => {
-  //         console.log(result);
-  //       });
-  //     });
-  //   }
-  // };
 
   return (
     <div className="d-flex justify-content-center">
