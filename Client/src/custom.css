@@ -18,3 +18,7 @@ code {
   background-color: #4a89c7;
   border-color: #3672ad;
 }
+
+html {
+  scroll-behavior: smooth;
+}
