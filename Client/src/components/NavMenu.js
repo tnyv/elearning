@@ -14,18 +14,17 @@ import {
 } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import "./NavMenu.css";
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 
 const NavMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
   const cookies = new Cookies();
   const history = useHistory();
-  const isLogged = cookies.get('isLogged');
+  const isLogged = cookies.get("isLogged");
 
   const toggleNavbar = () => {
     setCollapsed(!collapsed);
   };
-
 
   return (
     <header>
@@ -75,27 +74,75 @@ const NavMenu = () => {
                   </NavLink>
                 </NavItem>
               ) : (
-                  <UncontrolledDropdown nav inNavbar className="navItem">
-                    <DropdownToggle nav caret style={{ color: "black" }}>
-                      Account
+                <UncontrolledDropdown nav inNavbar className="navItem">
+                  <DropdownToggle nav caret style={{ color: "black" }}>
+                    Account
                   </DropdownToggle>
-                    <DropdownMenu
-                      style={{ marginTop: "10px", marginRight: "50px" }}
-                    >
-                      <DropdownItem className="dropItem">Profile</DropdownItem>
-                      <DropdownItem className="dropItem">
-                        Certificates
+                  <DropdownMenu
+                    style={{ marginTop: "10px", marginRight: "50px" }}
+                  >
+                    <DropdownItem className="dropItem">
+                      <Link
+                        to="/profile"
+                        style={{color: 'black'}}
+                      >
+                        Profile
+                      </Link>
                     </DropdownItem>
-
-                      <DropdownItem divider />
-                      <DropdownItem className="dropItem" onClick={() => {
-                        cookies.set('isLogged', false, { path: '/', expires: new Date(Date.now())});
-                        cookies.set('jwt', '', { path: '/', expires: new Date(Date.now())});
+                    <DropdownItem className="dropItem">
+                      Bookmarks
+                    </DropdownItem>
+                    <DropdownItem className="dropItem">
+                      Certificates
+                    </DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem
+                      className="dropItem"
+                      onClick={() => {
+                        cookies.set("isLogged", false, {
+                          path: "/",
+                          expires: new Date(Date.now()),
+                        });
+                        cookies.set("jwt", "", {
+                          path: "/",
+                          expires: new Date(Date.now()),
+                        });
+                        cookies.set("email", "", {
+                          path: "/",
+                          expires: new Date(Date.now()),
+                        });
+                        cookies.set("firstName", "", {
+                          path: "/",
+                          expires: new Date(Date.now()),
+                        });
+                        cookies.set("lastName", "", {
+                          path: "/",
+                          expires: new Date(Date.now()),
+                        });
+                        cookies.set("organization", "", {
+                          path: "/",
+                          expires: new Date(Date.now()),
+                        });
+                        cookies.set("role", "", {
+                          path: "/",
+                          expires: new Date(Date.now()),
+                        });
+                        cookies.set("points", "", {
+                          path: "/",
+                          expires: new Date(Date.now()),
+                        });
+                        cookies.set("certificates", "", {
+                          path: "/",
+                          expires: new Date(Date.now()),
+                        });
                         history.push("/");
-                      }}>Sign Out</DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                )}
+                      }}
+                    >
+                      Sign Out
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              )}
             </ul>
           </Collapse>
         </Container>
