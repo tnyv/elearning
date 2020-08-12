@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 import exampleImg from "../assets/example.jpg";
 import Leaderboard from "../components/Leaderboard";
 
+
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 
 const Home = () => {
@@ -22,12 +23,14 @@ const Home = () => {
   const myRef = useRef(null);
   const executeScroll = () => scrollToRef(myRef);
 
+  
+
   return (
     <div>
       <div className="jumbotron">
         <h1 className="display-4">Welcome back, {name}!</h1>
         <p className="lead">
-          Scroll down to view all available courses. You can earn points and a
+          Scroll down or click 'Courses' at the top of the page to view all available courses. You can earn points and a
           certificate once you have successfully compeleted a course. All of your earned certificates
           can be downloaded&nbsp;
           <Link to="/certificates" style={{ color: "black", textDecoration: "underline" }}>
