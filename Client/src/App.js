@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Route } from "react-router";
 import { Layout } from "./components/Layout";
-import  Home  from "./screens/Home";
-import { Counter } from "./components/Counter";
-import Login from "./screens/Login";
-import Profile from "./screens/Profile";
+import  HomeScreen from "./screens/HomeScreen";
+import LoginScreen from "./screens/LoginScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 import "./custom.css";
 
 const App = () => {
@@ -12,10 +11,9 @@ const App = () => {
 
     return (
       <Layout>
-        <Route exact path="/" component={Home} />
-        <Route path="/counter" component={Counter} />
-        <Route path="/login" component={Login} />
-        <Route path="/profile" component={Profile} />
+        <Route exact path="/" component={HomeScreen} />
+        <Route path="/login" component={LoginScreen} />
+        <Route path="/profile" component={ProfileScreen} />
       </Layout>
     );
 }

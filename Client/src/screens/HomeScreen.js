@@ -8,7 +8,7 @@ import Leaderboard from "../components/Leaderboard";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 
-const Home = () => {
+const HomeScreen = () => {
   const jwt = useSelector((state) => state.jwt);
   const cookies = new Cookies();
 
@@ -208,4 +208,4 @@ let styles = {
     marginBottom: "25px",
   }
 }
-export default Home;
+export default HomeScreen;
