@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
 import exampleImg from "../assets/example.jpg";
 
-const CoursesScreen = () => {
+const RegisteredCourses = () => {
   const cookies = new Cookies();
 
 
@@ -12,7 +12,7 @@ const CoursesScreen = () => {
     <div>
       <div className="jumbotron">
         <h1 className="display-4" style={{ fontSize: "36px" }}>
-          Available Courses
+          Registered Courses
         </h1>
         <hr className="my-4" />
         <div className="row">
@@ -66,4 +66,4 @@ let styles = {
   }
 }
 
-export default CoursesScreen;
+export default RegisteredCourses;

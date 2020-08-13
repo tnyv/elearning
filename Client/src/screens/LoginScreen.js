@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import exampleImg from "../assets/example.jpg";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -62,68 +63,75 @@ const LoginScreen = () => {
 
     if (isSuccess) {
       httpGetUser();
-      history.push("/counter");
+      history.push("/");
     } else {
       setIsError(true);
     }
   };
 
   return (
-    <div className="d-flex justify-content-center">
-      <form
-        style={{ marginTop: "120px" }}
-        className="col-md-5"
-        onSubmit={e => {
-          e.preventDefault();
-          onSubmit();
-        }}>
-        <label
-          style={{ fontSize: "30px", marginBottom: "10px", color: "black" }}
-        >
-          {" "}
+    <div className="row">
+
+      <div className="col-md-6">
+        <img src={exampleImg} className="card-img-top" alt="..." />
+      </div>
+
+      <div className="col-md-6">
+        <form
+          style={{ marginTop: "120px" }}
+          onSubmit={e => {
+            e.preventDefault();
+            onSubmit();
+          }}>
+          <label
+            style={{ fontSize: "30px", marginBottom: "10px", color: "black" }}
+          >
+            {" "}
           Welcome back!
         </label>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            className="form-control"
-            type="email"
-            name="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            className="form-control"
-            type="password"
-            name="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <div className="d-flex justify-content-end">
-            <Link
-              to="/"
-              style={{ padding: "0", color: "black", fontSize: "14px" }}
-            >
-              Forgot password?
-            </Link>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              className="form-control"
+              type="email"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
-        </div>
-        <div className="form-group">
-          <button
-            type="submit"
-            className="col-md-12 btn btn-primary"
-            style={{ borderRadius: "20px" }}
-          >
-            Sign in
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              className="form-control"
+              type="password"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <div className="d-flex justify-content-end">
+              <Link
+                to="/"
+                style={{ padding: "0", color: "black", fontSize: "14px" }}
+              >
+                Forgot password?
+            </Link>
+            </div>
+          </div>
+          <div className="form-group">
+            <button
+              type="submit"
+              className="col-md-12 btn btn-primary"
+              style={{ borderRadius: "20px" }}
+            >
+              Sign in
           </button>
-        </div>
-        {isError ? (
-          <div style={{ color: "red" }}>Incorrect email or password</div>
-        ) : (
-            <div></div>
-          )}
-      </form>
+          </div>
+          {isError ? (
+            <div style={{ color: "red" }}>Incorrect email or password</div>
+          ) : (
+              <div></div>
+            )}
+        </form>
+      </div>
+
     </div>
   );
 };

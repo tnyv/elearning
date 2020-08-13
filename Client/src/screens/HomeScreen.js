@@ -1,37 +1,35 @@
-import React, { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
-import exampleImg from "../assets/example.jpg";
 import Leaderboard from "../components/Leaderboard";
-
-
-const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
+import RegisteredCourses from "../components/RegisteredCourses";
+// import { useSelector, useDispatch } from "react-redux";
 
 const HomeScreen = () => {
-  const jwt = useSelector((state) => state.jwt);
+  // const jwt = useSelector((state) => state.jwt);
   const cookies = new Cookies();
+  const history = useHistory();
 
-  const clicked = () => {
-    console.log(cookies.get("isLogged"));
-    console.log(cookies.get("jwt"));
-  };
+  const [name, setName] = useState("");
+  const [points, setPoints] = useState("");
 
-  const name = cookies.get("firstName");
-  const points = cookies.get("points");
-
-  const myRef = useRef(null);
-  const executeScroll = () => scrollToRef(myRef);
-
-  
+  useEffect(() => {
+    if(!cookies.get("isLogged")) {
+      console.log("wtf");
+      history.push("/login");
+    } else {
+      setName(cookies.get("firstName"));
+      setPoints(cookies.get("points"));
+    }
+  })
 
   return (
     <div>
       <div className="jumbotron">
         <h1 className="display-4">Welcome back, {name}!</h1>
         <p className="lead">
-          Scroll down or click 'Courses' at the top of the page to view all available courses. You can earn points and a
-          certificate once you have successfully compeleted a course. All of your earned certificates
+          Scroll down to view your registered courses. You can view all available courses by clicking "Courses" in the navigation bar above.
+          You can earn points and a certificate once you have successfully compeleted a course. All of your earned certificates
           can be downloaded&nbsp;
           <Link to="/certificates" style={{ color: "black", textDecoration: "underline" }}>
             here
@@ -58,154 +56,11 @@ const HomeScreen = () => {
           </div>
         </div>
       </div>
+      <RegisteredCourses />
 
-      <div className="jumbotron" ref={myRef}>
-        <h1 className="display-4" style={{ fontSize: "36px" }}>
-          Beginner Courses
-        </h1>
-        <hr className="my-4" />
-        <div className="row">
-          <div className="col-md-4" style={styles.card}>
-            <div className="card">
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 1</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4" style={styles.card}>
-            <div className="card" >
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 1</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4" id="courses-top" style={styles.card}>
-            <div className="card">
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 1</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="jumbotron">
-        <h1 className="display-4" style={{ fontSize: "36px" }}>
-          Intermediate Courses
-        </h1>
-        <hr className="my-4" />
-        <div className="row">
-          <div className="col-md-4" style={styles.card}>
-            <div className="card">
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 1</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4" style={styles.card}>
-            <div className="card">
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 1</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4" style={styles.card}>
-            <div className="card">
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 1</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="jumbotron">
-        <h1 className="display-4" style={{ fontSize: "36px" }}>
-          Advanced Courses
-        </h1>
-        <hr className="my-4" />
-        <div className="row">
-          <div className="col-md-4">
-            <div className="card">
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 1</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4">
-            <div className="card">
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 1</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4">
-            <div className="card">
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 1</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
 
-let styles = {
-  card: {
-    marginBottom: "25px",
-  }
-}
+
 export default HomeScreen;

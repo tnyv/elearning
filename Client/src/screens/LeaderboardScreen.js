@@ -1,12 +1,12 @@
 import React from "react";
 
-const LeaderBoard = () => {
+const LeaderBoardScreen = () => {
   return (
     <div>
       <p className="d-flex justify-content-center">
         <b>Leaderboard</b>
       </p>
-      <table className="table">
+      <table class="table">
         <tbody>
           <tr>
             <th scope="row">1</th>
@@ -39,4 +39,4 @@ const LeaderBoard = () => {
   );
 };
 
-export default LeaderBoard;
+export default LeaderBoardScreen;
