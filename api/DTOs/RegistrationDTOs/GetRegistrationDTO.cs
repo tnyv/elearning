@@ -1,8 +1,8 @@
-using LMS.Models.Users;
+using System.Collections.Generic;
 
-namespace LMS.Models.Courses
+namespace LMS.DTOs.RegistrationDTOs
 {
-    public class Registration
+    public class GetRegistrationDTO
     {
         public int Id { get; set; }
         public int CourseId { get; set; }

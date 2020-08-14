@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using LMS.Services.CourseService;
 using Microsoft.AspNetCore.Http;
+using LMS.Services.RegistrationService;
 
 namespace LMS
 {
@@ -35,6 +36,7 @@ namespace LMS
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IRegistrationService, RegistrationService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {

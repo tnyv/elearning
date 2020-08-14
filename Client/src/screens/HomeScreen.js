@@ -15,7 +15,6 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if(!cookies.get("isLogged")) {
-      console.log("wtf");
       history.push("/login");
     } else {
       setName(cookies.get("firstName"));

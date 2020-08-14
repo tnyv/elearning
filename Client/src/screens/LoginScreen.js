@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 import exampleImg from "../assets/example.jpg";
 
 const LoginScreen = () => {
@@ -10,30 +10,58 @@ const LoginScreen = () => {
   const history = useHistory();
   const cookies = new Cookies();
 
-  // Save user data to cookies upon successsful login
+  // Save user data to cookies upon successsful verification
   const httpGetUser = () => {
-    fetch("user/" + email, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + cookies.get('jwt')
-      }
-    }).then((response) => {
-      response.json().then((result) => {
-        // Set to expire in 24 hours
-        const expirationDate = new Date(Date.now() + 60 * 60 * 24 * 1000);
+    return new Promise((resolve, reject) => {
+      fetch("user/" + email, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cookies.get("jwt"),
+        },
+      }).then((response) => {
+        response.json().then((result) => {
+          // Set to expire in 24 hours
+          const expirationDate = new Date(Date.now() + 60 * 60 * 24 * 1000);
 
-        cookies.set('email', result.data.email, { path: '/', expires: expirationDate });
-        cookies.set('firstName', result.data.firstName, { path: '/', expires: expirationDate });
-        cookies.set('lastName', result.data.lastName, { path: '/', expires: expirationDate });
-        cookies.set('organization', result.data.organization, { path: '/', expires: expirationDate });
-        cookies.set('role', result.data.role, { path: '/', expires: expirationDate });
-        cookies.set('points', result.data.points, { path: '/', expires: expirationDate });
-        cookies.set('certificates', "To be implemented", { path: '/', expires: expirationDate });
+          cookies.set("email", result.data.email, {
+            path: "/",
+            expires: expirationDate,
+          });
+          cookies.set("firstName", result.data.firstName, {
+            path: "/",
+            expires: expirationDate,
+          });
+          cookies.set("lastName", result.data.lastName, {
+            path: "/",
+            expires: expirationDate,
+          });
+          cookies.set("organization", result.data.organization, {
+            path: "/",
+            expires: expirationDate,
+          });
+          cookies.set("role", result.data.role, {
+            path: "/",
+            expires: expirationDate,
+          });
+          cookies.set("points", result.data.points, {
+            path: "/",
+            expires: expirationDate,
+          });
+          cookies.set("certificates", "To be implemented", {
+            path: "/",
+            expires: expirationDate,
+          });
+          resolve();
+        });
       });
     });
-  }
+  };
+
+  const loginSuccess = () => {
+    history.push("/");
+  };
 
   const httpLogin = async () => {
     return fetch("user/login", {
@@ -56,14 +84,18 @@ const LoginScreen = () => {
       const expirationDate = new Date(Date.now() + 60 * 60 * 24 * 1000);
 
       // Set jwt before httpGetUser is executed
-      cookies.set('isLogged', result.success, { path: '/', expires: expirationDate });
-      cookies.set('jwt', result.data, { path: '/', expires: expirationDate });
+      cookies.set("isLogged", result.success, {
+        path: "/",
+        expires: expirationDate,
+      });
+      cookies.set("jwt", result.data, { path: "/", expires: expirationDate });
       return result.success;
     });
 
     if (isSuccess) {
-      httpGetUser();
-      history.push("/");
+      httpGetUser().then(() => {
+        return loginSuccess();
+      });
     } else {
       setIsError(true);
     }
@@ -71,7 +103,6 @@ const LoginScreen = () => {
 
   return (
     <div className="row">
-
       <div className="col-md-6">
         <img src={exampleImg} className="card-img-top" alt="..." />
       </div>
@@ -79,16 +110,17 @@ const LoginScreen = () => {
       <div className="col-md-6">
         <form
           style={{ marginTop: "120px" }}
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             onSubmit();
-          }}>
+          }}
+        >
           <label
             style={{ fontSize: "30px", marginBottom: "10px", color: "black" }}
           >
             {" "}
-          Welcome back!
-        </label>
+            Welcome back!
+          </label>
           <div className="form-group">
             <label>Email</label>
             <input
@@ -112,7 +144,7 @@ const LoginScreen = () => {
                 style={{ padding: "0", color: "black", fontSize: "14px" }}
               >
                 Forgot password?
-            </Link>
+              </Link>
             </div>
           </div>
           <div className="form-group">
@@ -122,16 +154,15 @@ const LoginScreen = () => {
               style={{ borderRadius: "20px" }}
             >
               Sign in
-          </button>
+            </button>
           </div>
           {isError ? (
             <div style={{ color: "red" }}>Incorrect email or password</div>
           ) : (
-              <div></div>
-            )}
+            <div></div>
+          )}
         </form>
       </div>
-
     </div>
   );
 };
