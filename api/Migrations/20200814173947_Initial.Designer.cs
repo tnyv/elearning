@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200805233714_User2.0")]
-    partial class User20
+    [Migration("20200814173947_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,18 +28,10 @@ namespace LMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Courses");
                 });
@@ -100,11 +92,30 @@ namespace LMS.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("LMS.Models.Courses.Course", b =>
+            modelBuilder.Entity("api.Models.Certificate", b =>
                 {
-                    b.HasOne("LMS.Models.Users.User", "User")
-                        .WithMany("Courses")
-                        .HasForeignKey("UserId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CourseName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DateEarned")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Certificate");
                 });
 
             modelBuilder.Entity("LMS.Models.Courses.Module", b =>
@@ -112,6 +123,13 @@ namespace LMS.Migrations
                     b.HasOne("LMS.Models.Courses.Course", "course")
                         .WithMany("Modules")
                         .HasForeignKey("courseId");
+                });
+
+            modelBuilder.Entity("api.Models.Certificate", b =>
+                {
+                    b.HasOne("LMS.Models.Users.User", null)
+                        .WithMany("Certificates")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

@@ -21,11 +21,10 @@ namespace LMS.Controllers
             _courseService = CourseService;
         }
 
-        [HttpGet("GetAll")]
+       [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
-            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            return Ok(await _courseService.GetAllCourses(userId));
+            return Ok(await _courseService.GetAllCourses());
         }
 
         [HttpGet("{id}")]

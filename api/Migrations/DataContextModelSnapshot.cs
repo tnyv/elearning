@@ -26,18 +26,10 @@ namespace LMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Courses");
                 });
@@ -105,10 +97,13 @@ namespace LMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DateEarned")
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CourseName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("DateEarned")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
@@ -119,13 +114,6 @@ namespace LMS.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Certificate");
-                });
-
-            modelBuilder.Entity("LMS.Models.Courses.Course", b =>
-                {
-                    b.HasOne("LMS.Models.Users.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("LMS.Models.Courses.Module", b =>

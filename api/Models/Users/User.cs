@@ -16,5 +16,6 @@ namespace LMS.Models.Users
         public string Role { get; set; }
         public int Points { get; set; }
         public List<Certificate> Certificates { get; set; }
+        public List<Course> RegisteredCourses { get; set; }
     }
 }

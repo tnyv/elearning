@@ -33,6 +33,7 @@ namespace LMS
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICourseService, CourseService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {

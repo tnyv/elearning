@@ -3,10 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LMS.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -19,32 +32,12 @@ namespace LMS.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Organization = table.Column<string>(nullable: true),
-                    Type = table.Column<int>(nullable: false)
+                    Role = table.Column<string>(nullable: true),
+                    Points = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Courses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: true),
-                    Completed = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Courses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Courses_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,9 +60,31 @@ namespace LMS.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Certificate",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseId = table.Column<int>(nullable: false),
+                    CourseName = table.Column<string>(nullable: true),
+                    DateEarned = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Certificate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Certificate_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_UserId",
-                table: "Courses",
+                name: "IX_Certificate_UserId",
+                table: "Certificate",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -81,13 +96,16 @@ namespace LMS.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Certificate");
+
+            migrationBuilder.DropTable(
                 name: "Module");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Courses");
         }
     }
 }

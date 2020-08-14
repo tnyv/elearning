@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LMS.DTOs.CourseDTOs;
 using LMS.Models;
+using LMS.Models.Courses;
 
 namespace LMS.Services.CourseService
 {
     public interface ICourseService
     {
-        Task<ServiceResponse<List<GetCourseDTO>>> GetAllCourses(int userId);
+        Task<ServiceResponse<List<GetCourseDTO>>> GetAllCourses();
 
         Task<ServiceResponse<GetCourseDTO>> GetCourseById(int id);
 
