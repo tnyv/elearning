@@ -1,20 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using LMS.Data;
-using LMS.DTOs.UserDTOs;
 using LMS.Models;
-using LMS.Models.Users;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using LMS.Models.Courses;
 using LMS.DTOs.CourseDTOs;
+using System.Linq;
 
 namespace LMS.Services.CourseService
 {
@@ -22,13 +16,11 @@ namespace LMS.Services.CourseService
     {
         private readonly IMapper _mapper;
         private readonly DataContext _context;
-        private readonly IConfiguration _configuration;
 
-        public CourseService(IMapper mapper, DataContext context, IConfiguration configuration)
+        public CourseService(IMapper mapper, DataContext context)
         {
             _context = context;
             _mapper = mapper;
-            _configuration = configuration;
         }
 
         public async Task<ServiceResponse<List<GetCourseDTO>>> GetAllCourses()

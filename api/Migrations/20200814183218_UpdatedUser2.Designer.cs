@@ -4,14 +4,16 @@ using LMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LMS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200814183218_UpdatedUser2")]
+    partial class UpdatedUser2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,12 +31,12 @@ namespace LMS.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int?>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("userId");
 
                     b.ToTable("Courses");
                 });
@@ -57,26 +59,6 @@ namespace LMS.Migrations
                     b.HasIndex("courseId");
 
                     b.ToTable("Module");
-                });
-
-            modelBuilder.Entity("LMS.Models.Courses.Registration", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Registration");
                 });
 
             modelBuilder.Entity("LMS.Models.Users.User", b =>
@@ -143,9 +125,9 @@ namespace LMS.Migrations
 
             modelBuilder.Entity("LMS.Models.Courses.Course", b =>
                 {
-                    b.HasOne("LMS.Models.Users.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.HasOne("LMS.Models.Users.User", "user")
+                        .WithMany("RegisteredCourses")
+                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("LMS.Models.Courses.Module", b =>
@@ -153,13 +135,6 @@ namespace LMS.Migrations
                     b.HasOne("LMS.Models.Courses.Course", "course")
                         .WithMany("Modules")
                         .HasForeignKey("courseId");
-                });
-
-            modelBuilder.Entity("LMS.Models.Courses.Registration", b =>
-                {
-                    b.HasOne("LMS.Models.Users.User", "User")
-                        .WithMany("RegisteredCourses")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("api.Models.Certificate", b =>

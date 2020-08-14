@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LMS.DTOs.CourseDTOs;
 using LMS.Models;
-using LMS.Models.Courses;
 
 namespace LMS.Services.CourseService
 {

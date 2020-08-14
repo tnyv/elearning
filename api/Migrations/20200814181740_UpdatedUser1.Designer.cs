@@ -4,14 +4,16 @@ using LMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LMS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200814181740_UpdatedUser1")]
+    partial class UpdatedUser1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,12 +31,7 @@ namespace LMS.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Courses");
                 });
@@ -57,26 +54,6 @@ namespace LMS.Migrations
                     b.HasIndex("courseId");
 
                     b.ToTable("Module");
-                });
-
-            modelBuilder.Entity("LMS.Models.Courses.Registration", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Registration");
                 });
 
             modelBuilder.Entity("LMS.Models.Users.User", b =>
@@ -141,11 +118,24 @@ namespace LMS.Migrations
                     b.ToTable("Certificate");
                 });
 
-            modelBuilder.Entity("LMS.Models.Courses.Course", b =>
+            modelBuilder.Entity("api.Models.Registration", b =>
                 {
-                    b.HasOne("LMS.Models.Users.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Registration");
                 });
 
             modelBuilder.Entity("LMS.Models.Courses.Module", b =>
@@ -155,18 +145,18 @@ namespace LMS.Migrations
                         .HasForeignKey("courseId");
                 });
 
-            modelBuilder.Entity("LMS.Models.Courses.Registration", b =>
-                {
-                    b.HasOne("LMS.Models.Users.User", "User")
-                        .WithMany("RegisteredCourses")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("api.Models.Certificate", b =>
                 {
                     b.HasOne("LMS.Models.Users.User", null)
                         .WithMany("Certificates")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("api.Models.Registration", b =>
+                {
+                    b.HasOne("LMS.Models.Users.User", "user")
+                        .WithMany("RegisteredCourses")
+                        .HasForeignKey("userId");
                 });
 #pragma warning restore 612, 618
         }

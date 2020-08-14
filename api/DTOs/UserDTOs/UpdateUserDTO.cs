@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using api.Models;
 using LMS.Models.Courses;
-using LMS.Models.Users;
 
 namespace LMS.DTOs.UserDTOs
 {
@@ -17,6 +16,6 @@ namespace LMS.DTOs.UserDTOs
         public string Role { get; set; }
         public int Points { get; set; }
         public List<Certificate> Certificates { get; set; }
-        public List<Course> RegisteredCourses { get; set; }
+        public List<Registration> RegisteredCourses { get; set; }
     }
 }

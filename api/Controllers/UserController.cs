@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using api.DTOs.UserDTOs;
+using api.Models;
 using LMS.DTOs.UserDTOs;
 using LMS.Models;
+using LMS.Models.Courses;
 using LMS.Models.Users;
 using LMS.Models.Users.Role;
 using LMS.Services.UserService;
@@ -22,7 +24,7 @@ namespace LMS.Controllers
             _userService = userService;
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize]
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
@@ -73,7 +75,8 @@ namespace LMS.Controllers
                     Organization = request.Organization,
                     Role = "User",
                     Points = 0,
-                    Certificates = new List<api.Models.Certificate>()
+                    Certificates = new List<Certificate>(),
+                    RegisteredCourses = new List<Registration>()
                 }, request.Password
             );
             if (!response.Success)
