@@ -76,7 +76,7 @@ namespace LMS.Services.UserService
                 user.Organization = updatedUser.Organization;
                 user.Points = updatedUser.Points;
                 user.Certificates = updatedUser.Certificates;
-                user.RegisteredCourses = updatedUser.RegisteredCourses;
+                user.Registrations = updatedUser.Registrations;
 
                 // Update the particular User in the database
                 _context.Users.Update(user);

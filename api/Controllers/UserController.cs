@@ -76,7 +76,7 @@ namespace LMS.Controllers
                     Role = "User",
                     Points = 0,
                     Certificates = new List<Certificate>(),
-                    RegisteredCourses = new List<Registration>()
+                    Registrations = new List<Registration>()
                 }, request.Password
             );
             if (!response.Success)

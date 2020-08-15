@@ -14,6 +14,6 @@ namespace LMS.DTOs.UserDTOs
         public string Role { get; set; }
         public int Points { get; set; }
         public List<Certificate> Certificates { get; set; }
-        public List<Registration> RegisteredCourses { get; set; }
+        public List<Registration> Registrations { get; set; }
     }
 }

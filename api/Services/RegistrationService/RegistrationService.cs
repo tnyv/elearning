@@ -23,7 +23,7 @@ namespace LMS.Services.RegistrationService
             _mapper = mapper;
         }
 
-        public async Task<ServiceResponse<List<GetRegistrationDTO>>> GetAllRegistrations()
+        public async Task<ServiceResponse<List<GetRegistrationDTO>>> GetAllRegistered()
         {
             ServiceResponse<List<GetRegistrationDTO>> serviceResponse = new ServiceResponse<List<GetRegistrationDTO>>();
             List<Registration> dbRegistrations = await _context.Registrations.ToListAsync();
