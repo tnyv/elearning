@@ -53,7 +53,15 @@ namespace LMS
             {
                 configuration.RootPath = "../client/build";
             });
+
+            // IHttpContextAccessor service lets us utilize JWT claims to associated specific data with user, such as user and registrations.
+            // One instance is used in Registrations service currently. 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // This is used to avoid "possible object cycle was detected which is not supported" error message when creating new
+            // registrations between user and registration relations.
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

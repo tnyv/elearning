@@ -7,6 +7,7 @@ namespace LMS.Services.RegistrationService
 {
     public interface IRegistrationService
     {
+        Task<ServiceResponse<List<GetRegistrationDTO>>> GetRegistrationList();
         Task<ServiceResponse<List<GetRegistrationDTO>>> GetAllRegistered();
         Task<ServiceResponse<List<GetRegistrationDTO>>> AddRegistration(AddRegistrationDTO newRegistration);
         Task<ServiceResponse<List<GetRegistrationDTO>>> DeleteRegistration(int id);

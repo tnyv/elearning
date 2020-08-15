@@ -7,6 +7,9 @@ using LMS.Models.Users;
 
 namespace LMS
 {
+    // This class provides the "mapping" between the DTO's and the models in the SQL Server db.
+    // The DTO's essentially grab the body information with each HTTP call and translates it over
+    // to a data object (which is the model) that the backend can read. 
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()

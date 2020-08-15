@@ -24,14 +24,12 @@ namespace LMS.Controllers
             _userService = userService;
         }
 
-        [Authorize]
         [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
             return Ok(await _userService.GetAllUsers());
         }
 
-        [Authorize]
         [HttpGet("{email}")]
         public async Task<IActionResult> GetSingle(string email)
         {

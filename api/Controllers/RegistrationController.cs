@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using LMS.DTOs.RegistrationDTOs;
 using LMS.Models;
+using LMS.Models.Users.Role;
 using LMS.Services.RegistrationService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class RegistrationController : ControllerBase
@@ -19,7 +21,14 @@ namespace LMS.Controllers
             _registrationService = registrationService;
         }
 
-       [HttpGet("GetAll")]
+        [Authorize(Roles = Role.Admin)]
+        [HttpGet("GetList")]
+        public async Task<IActionResult> GetList()
+        {
+            return Ok(await _registrationService.GetRegistrationList());
+        }
+
+        [HttpGet("GetAll")]
         public async Task<IActionResult> Get()
         {
             return Ok(await _registrationService.GetAllRegistered());
