@@ -1,3 +1,4 @@
+Learning Management System
 
 This is my most current programming project and it is also the most complex project I have created. It is a light-weight learning management system. Users will be able to create an account, login, register to courses, view lectures, take tests, and earn points with a certificate each time they complete a course. In addition, role based JWT authorization will be utilized so that Admin roles can delete/edit users and add/edit courses on the system. User roles will only be able to perform bare minimum actions on the system.
 
