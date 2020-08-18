@@ -118,7 +118,7 @@ const NavMenu = () => {
                             path: "/",
                             expires: new Date(Date.now()),
                           });
-                          history.push("/");
+                          history.push("/login");
                         }}
                       >
                         Sign Out
