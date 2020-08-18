@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
 import Cookies from "universal-cookie";
 import exampleImg from "../assets/example.jpg";
 

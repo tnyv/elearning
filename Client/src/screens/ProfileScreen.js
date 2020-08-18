@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React from "react";
 import Cookies from "universal-cookie";
 
 const ProfileScreen = () => {

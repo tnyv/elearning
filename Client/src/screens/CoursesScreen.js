@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import Cookies from "universal-cookie";
+import React from "react";
+// import Cookies from "universal-cookie";
 import exampleImg from "../assets/example.jpg";
 
 const CoursesScreen = () => {
-  const cookies = new Cookies();
+  // const cookies = new Cookies();
 
 
 

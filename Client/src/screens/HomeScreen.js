@@ -13,19 +13,15 @@ const HomeScreen = () => {
   const [name, setName] = useState("");
   const [points, setPoints] = useState("");
   const [myCourses, setMyCourses] = useState([]);
+  const [data, setData] = useState();
 
-  useEffect(() => {
-    if(!cookies.get("isLogged")) {
-      history.push("/login");
-    } else {
-      setName(cookies.get("firstName"));
-      setPoints(cookies.get("points"));
-
-    }
-  })
+  const loginSuccess = () => {
+    console.log(myCourses);
+  };
 
   const httpGetCourses = () => {
     console.log("Getting courses");
+
     fetch("registration/getall", {
       method: "GET",
       headers: {
@@ -35,27 +31,48 @@ const HomeScreen = () => {
       },
     }).then((response) => {
       response.json().then((result) => {
-        result.data.forEach(element => {
-          // setMyCourses([...myCourses, element.courseId]);
-        })
+        var array = result.data;
+        var courses = [];
+
+        array.forEach((element) => {
+          courses.push(element.courseId);
+        });
+
+        setMyCourses(...myCourses, courses);
       });
     });
   };
 
+  useEffect(() => {
+    if (!cookies.get("isLogged")) {
+      history.push("/login");
+    } else {
+      setName(cookies.get("firstName"));
+      setPoints(cookies.get("points"));
+      httpGetCourses();
+    }
+  }, []);
+
   return (
     <div>
+      <button onClick={httpGetCourses}>GET </button>
+      <button onClick={loginSuccess}>VIEW</button>
       <div className="jumbotron">
         <h1 className="display-4">Welcome back, {name}!</h1>
         <p className="lead">
-          Scroll down to view your registered courses. You can view all available courses by clicking "Courses" in the navigation bar above.
-          You can earn points and a certificate once you have successfully compeleted a course. All of your earned certificates
-          can be downloaded&nbsp;
-          <Link to="/certificates" style={{ color: "black", textDecoration: "underline" }}>
+          Scroll down to view your registered courses. You can view all
+          available courses by clicking "Courses" in the navigation bar above.
+          You can earn points and a certificate once you have successfully
+          compeleted a course. All of your earned certificates can be
+          downloaded&nbsp;
+          <Link
+            to="/certificates"
+            style={{ color: "black", textDecoration: "underline" }}
+          >
             here
           </Link>
           .
         </p>
-
 
         <hr className="my-4" />
         <div className="row">
@@ -76,10 +93,8 @@ const HomeScreen = () => {
         </div>
       </div>
       <RegisteredCourses />
-
     </div>
   );
 };
-
 
 export default HomeScreen;
