@@ -12,6 +12,7 @@ const HomeScreen = () => {
 
   const [name, setName] = useState("");
   const [points, setPoints] = useState("");
+  const [myCourses, setMyCourses] = useState([]);
 
   useEffect(() => {
     if(!cookies.get("isLogged")) {
@@ -19,8 +20,27 @@ const HomeScreen = () => {
     } else {
       setName(cookies.get("firstName"));
       setPoints(cookies.get("points"));
+
     }
   })
+
+  const httpGetCourses = () => {
+    console.log("Getting courses");
+    fetch("registration/getall", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.get("jwt"),
+      },
+    }).then((response) => {
+      response.json().then((result) => {
+        result.data.forEach(element => {
+          // setMyCourses([...myCourses, element.courseId]);
+        })
+      });
+    });
+  };
 
   return (
     <div>

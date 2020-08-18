@@ -1,6 +1,12 @@
 
 This is my most current programming project and it is also the most complex project I have created. It is a light-weight learning management system. Users will be able to create an account, login, register to courses, view lectures, take tests, and earn points with a certificate each time they complete a course. In addition, role based JWT authorization will be utilized so that Admin roles can delete/edit users and add/edit courses on the system. User roles will only be able to perform bare minimum actions on the system.
 
+KEY TECHNIQUES:
+- Role based authorization with JWTs. 
+- JWT claims used for course registrations + database relationships. Each time a user registers for a course, their user ID is automatically associated with that specific course registration's ID. Whenever the user calls /registrations/getall HTTP GET method, only their associated
+courses are returned. (Admins are able to call /registrations/getlist HTTP GET method to see all existing registrations)
+- DTOs utilized for encapsulating data to send from one subsystem to another, i.e. data from http body reqeuest to backend
+
 Technologies used:
 - .NET Core 3.1
 - C#

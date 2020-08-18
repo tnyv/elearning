@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
 import exampleImg from "../assets/example.jpg";
@@ -6,7 +6,10 @@ import exampleImg from "../assets/example.jpg";
 const RegisteredCourses = () => {
   const cookies = new Cookies();
 
+  const [myCourses, setMyCourses] = useState([]);
 
+
+  
 
   return (
     <div>

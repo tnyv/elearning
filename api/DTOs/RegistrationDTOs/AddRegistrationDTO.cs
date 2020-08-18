@@ -8,4 +8,4 @@ namespace LMS.DTOs.RegistrationDTOs
         public Course Course { get; set; }
         public int CourseId {get; set;}
     }
-}
+} 
