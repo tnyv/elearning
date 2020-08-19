@@ -17,7 +17,7 @@ const HomeScreen = () => {
   // This method retrieves the entire course object with corresponding id,
   // along with its name, summary, and modules.
   const getMyCourses = () => {
-    registrations.forEach(element => {
+    registrations.forEach((element) => {
       fetch("course/" + element, {
         method: "GET",
         headers: {
@@ -27,11 +27,11 @@ const HomeScreen = () => {
         },
       }).then((response) => {
         response.json().then((result) => {
-          setMyCourses(oldArray => [...oldArray, result.data]);
+          setMyCourses((oldArray) => [...oldArray, result.data]);
         });
       });
-    })
-  }
+    });
+  };
 
   // Retrieves the user's course registrations (which is an array of course id Ints).
   const getRegistrations = async () => {
@@ -70,7 +70,7 @@ const HomeScreen = () => {
   // When registrations are retrieved, execute getMyCourses to get courses array.
   useEffect(() => {
     getMyCourses();
-  }, [registrations])
+  }, [registrations]);
 
   return (
     <div>
@@ -78,10 +78,10 @@ const HomeScreen = () => {
         <h1 className="display-4">Welcome back, {name}!</h1>
         <p className="lead">
           Scroll down to view your registered Registrations. You can view all
-          available Registrations by clicking "Registrations" in the navigation bar above.
-          You can earn points and a certificate once you have successfully
-          compeleted a course. All of your earned certificates can be
-          downloaded&nbsp;
+          available Registrations by clicking "Registrations" in the navigation
+          bar above. You can earn points and a certificate once you have
+          successfully compeleted a course. All of your earned certificates can
+          be downloaded&nbsp;
           <Link
             to="/certificates"
             style={{ color: "black", textDecoration: "underline" }}

@@ -36,7 +36,7 @@ const NavMenu = () => {
           <NavbarBrand tag={Link} to="/">
             Tony's LMS
           </NavbarBrand>
-          {isLogged ?
+          {isLogged ? (
             <div>
               <NavbarToggler onClick={() => toggleNavbar()} className="mr-2" />
               <Collapse
@@ -51,7 +51,11 @@ const NavMenu = () => {
                     </NavLink>
                   </NavItem>
                   <NavItem className="navItem">
-                    <NavLink tag={Link} to="/courses" style={{ color: "black" }}>
+                    <NavLink
+                      tag={Link}
+                      to="/courses"
+                      style={{ color: "black" }}
+                    >
                       Courses
                     </NavLink>
                   </NavItem>
@@ -63,10 +67,7 @@ const NavMenu = () => {
                       style={{ marginTop: "10px", marginRight: "50px" }}
                     >
                       <DropdownItem className="dropItem">
-                        <Link
-                          to="/profile"
-                          style={{ color: 'black' }}
-                        >
+                        <Link to="/profile" style={{ color: "black" }}>
                           Profile
                         </Link>
                       </DropdownItem>
@@ -74,10 +75,7 @@ const NavMenu = () => {
                         Certificates
                       </DropdownItem>
                       <DropdownItem className="dropItem">
-                        <Link
-                          to="/drop"
-                          style={{ color: 'black' }}
-                        >
+                        <Link to="/drop" style={{ color: "black" }}>
                           Drop a course
                         </Link>
                       </DropdownItem>
@@ -131,7 +129,9 @@ const NavMenu = () => {
                 </ul>
               </Collapse>
             </div>
-            : <div></div>}
+          ) : (
+            <div></div>
+          )}
         </Container>
       </Navbar>
     </header>

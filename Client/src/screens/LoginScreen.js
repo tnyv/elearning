@@ -103,7 +103,7 @@ const LoginScreen = () => {
 
   return (
     <div className="container">
-      <div className="col-md-5" style={{margin: "auto"}}>
+      <div className="col-md-5" style={{ margin: "auto" }}>
         <form
           style={{ marginTop: "120px" }}
           onSubmit={(e) => {

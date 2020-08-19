@@ -21,13 +21,13 @@ const CoursesScreen = () => {
     }).then((response) => {
       response.json().then((result) => {
         let array = result.data;
-        array.forEach(element => {
+        array.forEach((element) => {
           if (registrations.length != 0) {
             if (!registrations.includes(element.id)) {
-              setCourses(oldArray => [...oldArray, element]);
+              setCourses((oldArray) => [...oldArray, element]);
             }
           }
-        })
+        });
       });
     });
   };
@@ -54,7 +54,7 @@ const CoursesScreen = () => {
           resolve();
         });
       });
-    })
+    });
   };
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const CoursesScreen = () => {
 
   useEffect(() => {
     getCourses();
-  }, [registrations])
+  }, [registrations]);
 
   const register = (id) => {
     return new Promise((resolve, reject) => {
@@ -79,31 +79,36 @@ const CoursesScreen = () => {
           Authorization: "Bearer " + cookies.get("jwt"),
         },
         body: JSON.stringify({
-          courseId: id
+          courseId: id,
         }),
       }).then(() => {
         resolve();
       });
-    })
-
-  }
+    });
+  };
 
   const refresh = () => {
     history.push("/courses");
-  }
+  };
 
   const registerClick = (id) => {
     register(id).then(() => {
       return refresh();
-    })
-  }
+    });
+  };
 
   const courseList = courses.map((course, index) => {
     return (
-      <div className="col-xs-12 col-sm-6 col-md-3" style={styles.card} key={index}>
+      <div
+        className="col-xs-12 col-sm-6 col-md-3"
+        style={styles.card}
+        key={index}
+      >
         <div className="card">
           <div className="card-body">
-            <h5 className="card-title" style={{ height: "40px" }}>{course.name}</h5>
+            <h5 className="card-title" style={{ height: "40px" }}>
+              {course.name}
+            </h5>
             <p className="card-text">{course.summary}</p>
           </div>
           <button
@@ -111,27 +116,26 @@ const CoursesScreen = () => {
               registerClick(course.id);
             }}
             className="btn btn-primary"
-            style={{ margin: "20px" }}>
+            style={{ margin: "20px" }}
+          >
             Register
           </button>
         </div>
       </div>
-    )
-  })
+    );
+  });
 
   return (
     <div>
       <div className="jumbotron">
         <h1 className="display-4" style={{ fontSize: "36px" }}>
           Available Courses
-      </h1>
+        </h1>
         <p className="lead">
           These are the available courses you have not registered.
         </p>
         <hr className="my-4" />
-        <div className="row">
-          {courseList}
-        </div>
+        <div className="row">{courseList}</div>
       </div>
     </div>
   );
@@ -141,8 +145,8 @@ let styles = {
   card: {
     marginBottom: "25px",
     display: "flex",
-    flexWrap: "wrap"
-  }
-}
+    flexWrap: "wrap",
+  },
+};
 
 export default CoursesScreen;
