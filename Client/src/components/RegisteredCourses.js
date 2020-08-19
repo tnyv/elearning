@@ -1,17 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import exampleImg from "../assets/example.jpg";
 
-const RegisteredCourses = () => {
+const RegisteredCourses = (props) => {
   const cookies = new Cookies();
+  const [courses, setCourses] = useState([]);
 
-  const [myCourses, setMyCourses] = useState([]);
+
+  useEffect(() => {
+    setCourses(...courses, props.myCourses);
+    console.log(courses);
+  },[])
 
 
-  
+
+  const myCourseList = props.myCourses.map((course) => {
+    return (
+      <p>{course.name}</p>
+    )
+  })
+
+  const testing = () => {
+    console.log(courses);
+  }
+
+  const testing2 = () => {
+    console.log(props.myCourses);
+  }
 
   return (
     <div>
+      <p>{myCourseList}</p>
+
+      <div>
+      <button onClick={testing}>courses state</button>
+      <button onClick={testing2}>props.myCourses</button>
+      
+      </div>
+
+
       <div className="jumbotron">
         <h1 className="display-4" style={{ fontSize: "36px" }}>
           Registered Courses
