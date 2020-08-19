@@ -61,7 +61,7 @@ namespace LMS.Services.CourseService
                 // Grab the specific Course from the database asynchronously.
                 Course course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == updatedCourse.Id);
                 course.Name = updatedCourse.Name;
-                course.Modules = updatedCourse.Modules;
+                course.Summary = updatedCourse.Summary;
 
                 // Update the specific Course in the database
                 _context.Courses.Update(course);

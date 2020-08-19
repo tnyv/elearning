@@ -12,16 +12,38 @@ const HomeScreen = () => {
 
   const [name, setName] = useState("");
   const [points, setPoints] = useState("");
+  const [registrations, setRegistrations] = useState([]);
   const [myCourses, setMyCourses] = useState([]);
-  const [data, setData] = useState();
 
   const loginSuccess = () => {
-    console.log(myCourses);
+    console.log(myCourses.length);
   };
 
-  const httpGetCourses = () => {
-    console.log("Getting courses");
+  const getMyCourses = () => {
+    let array = [];
 
+    registrations.forEach(element => {
+      fetch("course/" + element, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cookies.get("jwt"),
+        },
+      }).then((response) => {
+        response.json().then((result) => {
+          console.log(element + " ELEMENT");
+          array.push(result.data);
+        });
+      });
+    })
+
+    setMyCourses(...myCourses, array);
+  }
+
+  
+
+  const getRegistrations = () => {
     fetch("registration/getall", {
       method: "GET",
       headers: {
@@ -31,37 +53,48 @@ const HomeScreen = () => {
       },
     }).then((response) => {
       response.json().then((result) => {
-        var array = result.data;
-        var courses = [];
+        let array = result.data;
+        let myRegistrations = [];
 
         array.forEach((element) => {
-          courses.push(element.courseId);
+          myRegistrations.push(element.courseId);
         });
 
-        setMyCourses(...myCourses, courses);
+        setRegistrations(...registrations, myRegistrations);
       });
     });
   };
 
+  // Used first to pupulate elements
   useEffect(() => {
     if (!cookies.get("isLogged")) {
       history.push("/login");
     } else {
       setName(cookies.get("firstName"));
       setPoints(cookies.get("points"));
-      httpGetCourses();
+      getRegistrations();
     }
   }, []);
 
+  // When registrations are retrieved, execute getMyCourses to get courses array.
+  useEffect(() => {
+    console.log(registrations);
+    getMyCourses();
+    loginSuccess();
+  }, [registrations])
+
+  useEffect(() => {
+    loginSuccess();
+  }, [myCourses])
+
   return (
     <div>
-      <button onClick={httpGetCourses}>GET </button>
-      <button onClick={loginSuccess}>VIEW</button>
+      <button onClick={loginSuccess}></button>
       <div className="jumbotron">
         <h1 className="display-4">Welcome back, {name}!</h1>
         <p className="lead">
-          Scroll down to view your registered courses. You can view all
-          available courses by clicking "Courses" in the navigation bar above.
+          Scroll down to view your registered Registrations. You can view all
+          available Registrations by clicking "Registrations" in the navigation bar above.
           You can earn points and a certificate once you have successfully
           compeleted a course. All of your earned certificates can be
           downloaded&nbsp;
