@@ -1,12 +1,12 @@
 import React from "react";
 
-const LeaderBoardScreen = () => {
+const MyCertificates = () => {
   return (
     <div>
       <p className="d-flex justify-content-center">
-        <b>Leaderboard</b>
+        <b>Certificates</b>
       </p>
-      <table class="table">
+      <table className="table">
         <tbody>
           <tr>
             <th scope="row">1</th>
@@ -39,4 +39,4 @@ const LeaderBoardScreen = () => {
   );
 };
 
-export default LeaderBoardScreen;
+export default MyCertificates;

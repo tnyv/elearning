@@ -55,11 +55,6 @@ const NavMenu = () => {
                       Courses
                     </NavLink>
                   </NavItem>
-                  <NavItem className="navItem">
-                    <NavLink tag={Link} to="/leaderboard" style={{ color: "black" }}>
-                      Leaderboard
-                    </NavLink>
-                  </NavItem>
                   <UncontrolledDropdown nav inNavbar className="navItem">
                     <DropdownToggle nav caret style={{ color: "black" }}>
                       Account
@@ -77,6 +72,14 @@ const NavMenu = () => {
                       </DropdownItem>
                       <DropdownItem className="dropItem">
                         Certificates
+                      </DropdownItem>
+                      <DropdownItem className="dropItem">
+                        <Link
+                          to="/drop"
+                          style={{ color: 'black' }}
+                        >
+                          Drop a course
+                        </Link>
                       </DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem

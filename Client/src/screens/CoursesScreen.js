@@ -1,58 +1,136 @@
-import React from "react";
-// import Cookies from "universal-cookie";
-import exampleImg from "../assets/example.jpg";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 const CoursesScreen = () => {
-  // const cookies = new Cookies();
+  const cookies = new Cookies();
+  const history = useHistory();
 
+  const [courses, setCourses] = useState([]);
+  const [registrations, setRegistrations] = useState([]);
 
+  // Retrieve all available courses from database
+  const getCourses = async () => {
+    await fetch("course/getall", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.get("jwt"),
+      },
+    }).then((response) => {
+      response.json().then((result) => {
+        let array = result.data;
+        array.forEach(element => {
+          if (registrations.length != 0) {
+            if (!registrations.includes(element.id)) {
+              setCourses(oldArray => [...oldArray, element]);
+            }
+          }
+        })
+      });
+    });
+  };
+
+  // Retrieves the user's course registrations (which is an array of course id Ints).
+  const getRegistrations = () => {
+    return new Promise((resolve, reject) => {
+      fetch("registration/getall", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cookies.get("jwt"),
+        },
+      }).then((response) => {
+        response.json().then((result) => {
+          let array = result.data;
+          let myRegistrations = [];
+
+          array.forEach((element) => {
+            myRegistrations.push(element.courseId);
+          });
+          setRegistrations(...registrations, myRegistrations);
+          resolve();
+        });
+      });
+    })
+  };
+
+  useEffect(() => {
+    if (!cookies.get("isLogged")) {
+      history.push("/login");
+    } else {
+      getRegistrations();
+    }
+  }, []);
+
+  useEffect(() => {
+    getCourses();
+  }, [registrations])
+
+  const register = (id) => {
+    return new Promise((resolve, reject) => {
+      fetch("registration", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cookies.get("jwt"),
+        },
+        body: JSON.stringify({
+          courseId: id
+        }),
+      }).then(() => {
+        resolve();
+      });
+    })
+
+  }
+
+  const refresh = () => {
+    history.push("/courses");
+  }
+
+  const registerClick = (id) => {
+    register(id).then(() => {
+      return refresh();
+    })
+  }
+
+  const courseList = courses.map((course, index) => {
+    return (
+      <div className="col-xs-12 col-sm-6 col-md-3" style={styles.card} key={index}>
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title" style={{ height: "40px" }}>{course.name}</h5>
+            <p className="card-text">{course.summary}</p>
+          </div>
+          <button
+            onClick={() => {
+              registerClick(course.id);
+            }}
+            className="btn btn-primary"
+            style={{ margin: "20px" }}>
+            Register
+          </button>
+        </div>
+      </div>
+    )
+  })
 
   return (
     <div>
       <div className="jumbotron">
         <h1 className="display-4" style={{ fontSize: "36px" }}>
           Available Courses
-        </h1>
+      </h1>
+        <p className="lead">
+          These are the available courses you have not registered.
+        </p>
         <hr className="my-4" />
         <div className="row">
-          <div className="col-md-4" style={styles.card}>
-            <div className="card">
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 1</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4" style={styles.card}>
-            <div className="card" >
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 2</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4" id="courses-top" style={styles.card}>
-            <div className="card">
-              <img src={exampleImg} className="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">Course 3</h5>
-                <p className="card-text">Course summary will go here</p>
-                <a href="#" className="btn btn-primary">
-                  Take course
-                </a>
-              </div>
-            </div>
-          </div>
+          {courseList}
         </div>
       </div>
     </div>
@@ -62,6 +140,8 @@ const CoursesScreen = () => {
 let styles = {
   card: {
     marginBottom: "25px",
+    display: "flex",
+    flexWrap: "wrap"
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
-import Leaderboard from "../components/Leaderboard";
+import MyCertificates from "../components/MyCertificates";
 import RegisteredCourses from "../components/RegisteredCourses";
 
 const HomeScreen = () => {
@@ -105,7 +105,7 @@ const HomeScreen = () => {
             </p>
           </div>
           <div className="col-md-6">
-            <Leaderboard />
+            <MyCertificates />
           </div>
         </div>
       </div>

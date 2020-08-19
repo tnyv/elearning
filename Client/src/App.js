@@ -5,7 +5,8 @@ import  HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import CoursesScreen from "./screens/CoursesScreen";
-import LeaderboardScreen from "./screens/LeaderboardScreen";
+import ClassScreen from "./screens/ClassScreen";
+import DropScreen from "./screens/DropScreen";
 
 import "./custom.css";
 
@@ -18,7 +19,8 @@ const App = () => {
         <Route path="/courses" component={CoursesScreen} />
         <Route path="/login" component={LoginScreen} />
         <Route path="/profile" component={ProfileScreen} />
-        <Route path="/leaderboard" component={LeaderboardScreen} />
+        <Route path="/class" component={ClassScreen} />
+        <Route path="/drop" component={DropScreen} />
       </Layout>
     );
 }

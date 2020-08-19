@@ -102,12 +102,8 @@ const LoginScreen = () => {
   };
 
   return (
-    <div className="row">
-      <div className="col-md-6">
-        <img src={exampleImg} className="card-img-top" alt="..." />
-      </div>
-
-      <div className="col-md-6">
+    <div className="container">
+      <div className="col-md-5" style={{margin: "auto"}}>
         <form
           style={{ marginTop: "120px" }}
           onSubmit={(e) => {
