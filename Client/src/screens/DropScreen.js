@@ -105,7 +105,8 @@ const DropScreen = () => {
   };
 
   const refresh = () => {
-    history.push("/drop");
+    window.location.reload();
+    alert("You have successfully dropped this course.");
   }
 
   const myCourseList = myCourses.map((course, index) => {
