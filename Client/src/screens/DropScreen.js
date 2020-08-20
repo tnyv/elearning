@@ -59,12 +59,54 @@ const DropScreen = () => {
     }
   }, []);
 
-  // When registrations are retrieved, execute getMyCourses to get courses array.
   useEffect(() => {
     getMyCourses();
-  }, [registrations]);
+  }, [registrations])
 
-  const drop = (id) => {};
+
+  const httpDrop = (registrationId) => {
+    return new Promise((resolve, reject) => {
+      fetch("registration/" + registrationId, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + cookies.get("jwt"),
+        },
+      }).then(() => {
+        resolve();
+      })
+    })
+  }
+
+  const dropSubmit = (courseId) => {
+    console.log("drop clicked");
+    fetch("registration/getall", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + cookies.get("jwt"),
+      },
+    }).then((response) => {
+      response.json().then((result) => {
+        let array = result.data;
+
+        array.forEach((element) => {
+          if(element.courseId == courseId) {
+            console.log(element.id);
+            httpDrop(element.id).then(() => {
+              return refresh();
+            });
+          }
+        });
+      });
+    });
+  };
+
+  const refresh = () => {
+    history.push("/drop");
+  }
 
   const myCourseList = myCourses.map((course, index) => {
     return (
@@ -72,14 +114,13 @@ const DropScreen = () => {
         <th scope="row">{course.id}</th>
         <td>{course.name}</td>
         <td>
-          <a
-            href=""
+          <button
             onClick={() => {
-              drop(course.id);
+              dropSubmit(course.id);
             }}
           >
             Drop
-          </a>
+          </button>
         </td>
       </tr>
     );

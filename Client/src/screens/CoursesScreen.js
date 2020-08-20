@@ -20,13 +20,10 @@ const CoursesScreen = () => {
       },
     }).then((response) => {
       response.json().then((result) => {
+        setCourses([]);
         let array = result.data;
         array.forEach((element) => {
-          if (registrations.length != 0) {
-            if (!registrations.includes(element.id)) {
-              setCourses((oldArray) => [...oldArray, element]);
-            }
-          }
+          setCourses((oldArray) => [...oldArray, element]);
         });
       });
     });
@@ -57,17 +54,7 @@ const CoursesScreen = () => {
     });
   };
 
-  useEffect(() => {
-    if (!cookies.get("isLogged")) {
-      history.push("/login");
-    } else {
-      getRegistrations();
-    }
-  }, []);
 
-  useEffect(() => {
-    getCourses();
-  }, [registrations]);
 
   const register = (id) => {
     return new Promise((resolve, reject) => {
@@ -88,14 +75,29 @@ const CoursesScreen = () => {
   };
 
   const refresh = () => {
-    history.push("/courses");
+    window.location.reload();
+    alert("Your registration is successful!")
   };
 
   const registerClick = (id) => {
-    register(id).then(() => {
-      return refresh();
-    });
+
+    if(registrations.includes(id)) {
+      alert("You're already registered in that class.");
+    } else {
+      register(id).then(() => {
+        return refresh();
+      });
+    }
   };
+
+  useEffect(() => {
+    getCourses();
+    getRegistrations();
+  }, []);
+
+  useEffect(() => {
+    getCourses();
+  }, [registrations])
 
   const courseList = courses.map((course, index) => {
     return (
@@ -127,6 +129,9 @@ const CoursesScreen = () => {
 
   return (
     <div>
+      <button onClick={() => {
+          console.log(registrations);
+        }}>COURSES</button>
       <div className="jumbotron">
         <h1 className="display-4" style={{ fontSize: "36px" }}>
           Available Courses
