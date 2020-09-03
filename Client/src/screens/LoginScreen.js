@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Cookies from "universal-cookie";
-import exampleImg from "../assets/example.jpg";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -158,6 +157,20 @@ const LoginScreen = () => {
             <div></div>
           )}
         </form>
+        <label
+          style={{ fontSize: "20px", marginTop: "40px", color: "black" }}
+          class="d-flex justify-content-center"
+        >
+          {" "}
+          Don't have an account?
+        </label>
+        <Link
+          to="/create"
+          className="col-md-12 btn btn-secondary"
+          style={{ borderRadius: "20px" }}
+        >
+          Create account
+        </Link>
       </div>
     </div>
   );

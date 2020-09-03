@@ -54,8 +54,6 @@ const CoursesScreen = () => {
     });
   };
 
-
-
   const register = (id) => {
     return new Promise((resolve, reject) => {
       fetch("registration", {
@@ -76,12 +74,11 @@ const CoursesScreen = () => {
 
   const refresh = () => {
     window.location.reload();
-    alert("Your registration is successful!")
+    alert("Your registration is successful!");
   };
 
   const registerClick = (id) => {
-
-    if(registrations.includes(id)) {
+    if (registrations.includes(id)) {
       alert("You're already registered in that class.");
     } else {
       register(id).then(() => {
@@ -97,7 +94,7 @@ const CoursesScreen = () => {
 
   useEffect(() => {
     getCourses();
-  }, [registrations])
+  }, [registrations]);
 
   const courseList = courses.map((course, index) => {
     return (
@@ -129,9 +126,13 @@ const CoursesScreen = () => {
 
   return (
     <div>
-      <button onClick={() => {
+      <button
+        onClick={() => {
           console.log(registrations);
-        }}>COURSES</button>
+        }}
+      >
+        COURSES
+      </button>
       <div className="jumbotron">
         <h1 className="display-4" style={{ fontSize: "36px" }}>
           Available Courses
