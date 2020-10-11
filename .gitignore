@@ -230,7 +230,3 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-
-api/appsettings.json
-
-api/Migrations
