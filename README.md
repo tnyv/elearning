@@ -17,6 +17,6 @@ Technologies used:
 
 1. Download the zip and extract
 2. cd into /client and npm install
-3. Open /Api directory and create an appsettings.json file (this is where you can link your own sql server db)
+3. Open /Api directory and update the appsettings.json file (this is where you can link your own sql server db)
 Your appsettings.json file should follow this template: { "Logging": { "LogLevel": { "Default": "Information", "Microsoft": "Warning", "Microsoft.Hosting.Lifetime": "Information" } }, "AllowedHosts": "*", "ConnectionStrings": { "ProductionConnect": "[DATABASE LOGIN STRING GOES HERE]" } }
 4. cd into /Api and type "dotnet run" to start the project
